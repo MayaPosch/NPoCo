@@ -69,7 +69,7 @@ public:
 	void swap(Timestamp& timestamp);
 		/// Swaps the Timestamp with another one.
 	
-	void update();
+	bool update();
 		/// Updates the Timestamp with the current time.
 
 	bool operator == (const Timestamp& ts) const;
