@@ -48,7 +48,7 @@ public:
 	TIDImpl tidImpl() const;
 	bool setPriorityImpl(int prio);
 	int getPriorityImpl() const;
-	void setOSPriorityImpl(int prio, int policy = 0);
+	bool setOSPriorityImpl(int prio, int policy = 0);
 	int getOSPriorityImpl() const;
 	static int getMinOSPriorityImpl(int policy);
 	static int getMaxOSPriorityImpl(int policy);
@@ -79,8 +79,10 @@ private:
 	public:
 		CurrentThreadHolder(): _slot(TlsAlloc())
 		{
-			if (_slot == TLS_OUT_OF_INDEXES)
-				throw SystemException("cannot allocate thread context key");
+			if (_slot == TLS_OUT_OF_INDEXES) {
+				//throw SystemException("cannot allocate thread context key");
+				// TODO: Handle error.
+			}
 		}
 		~CurrentThreadHolder()
 		{

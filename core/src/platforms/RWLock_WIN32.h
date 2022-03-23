@@ -7,9 +7,8 @@
 #define Core_RWLock_WIN32_INCLUDED
 
 
-#include "Poco/Foundation.h"
-#include "Poco/Exception.h"
-#include "Poco/UnWindows.h"
+#include "Core.h"
+#include "UnWindows.h"
 
 
 namespace Poco {

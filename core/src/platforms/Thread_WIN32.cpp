@@ -80,8 +80,8 @@ bool ThreadImpl::setPriorityImpl(int prio) {
 }
 
 
-void ThreadImpl::setOSPriorityImpl(int prio, int /* policy */) {
-	setPriorityImpl(prio);
+bool ThreadImpl::setOSPriorityImpl(int prio, int /* policy */) {
+	return setPriorityImpl(prio);
 }
 
 
@@ -181,10 +181,10 @@ unsigned __stdcall ThreadImpl::runnableEntry(void* pThread)
 #if defined(POCO_WIN32_DEBUGGER_THREAD_NAMES)
 	setThreadName(-1, reinterpret_cast<Thread*>(pThread)->getName().c_str());
 #endif
-	try
-	{
-		reinterpret_cast<ThreadImpl*>(pThread)->_pRunnableTarget->run();
-	}
+	/* try
+	{ */
+	reinterpret_cast<ThreadImpl*>(pThread)->_pRunnableTarget->run();
+	/* }
 	catch (Exception& exc)
 	{
 		ErrorHandler::handle(exc);
@@ -196,7 +196,7 @@ unsigned __stdcall ThreadImpl::runnableEntry(void* pThread)
 	catch (...)
 	{
 		ErrorHandler::handle();
-	}
+	} */
 	
 	return 0;
 }
