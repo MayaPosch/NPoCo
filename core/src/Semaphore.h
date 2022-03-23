@@ -1,52 +1,38 @@
-//
-// Semaphore.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Semaphore
-//
-// Definition of the Semaphore class.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Semaphore.h - Definition of the Semaphore class.
+*/
 
 
-#ifndef Foundation_Semaphore_INCLUDED
-#define Foundation_Semaphore_INCLUDED
+#ifndef Core_Semaphore_INCLUDED
+#define Core_Semaphore_INCLUDED
 
 
-#include "Poco/Foundation.h"
-#include "Poco/Exception.h"
+#include "Core.h"
 
 
 #if defined(POCO_OS_FAMILY_WINDOWS)
-#include "Poco/Semaphore_WIN32.h"
+#include "platforms/Semaphore_WIN32.h"
 #elif defined(POCO_VXWORKS)
-#include "Poco/Semaphore_VX.h"
+#include "platforms/Semaphore_VX.h"
 #else
-#include "Poco/Semaphore_POSIX.h"
+#include "platforms/Semaphore_POSIX.h"
 #endif
 
 
 namespace Poco {
 
-
-class Foundation_API Semaphore: private SemaphoreImpl
-	/// A Semaphore is a synchronization object with the following 
-	/// characteristics:
-	/// A semaphore has a value that is constrained to be a non-negative
-	/// integer and two atomic operations. The allowable operations are V 
-	/// (here called set()) and P (here called wait()). A V (set()) operation 
-	/// increases the value of the semaphore by one. 
-	/// A P (wait()) operation decreases the value of the semaphore by one, 
-	/// provided that can be done without violating the constraint that the 
-	/// value be non-negative. A P (wait()) operation that is initiated when 
-	/// the value of the semaphore is 0 suspends the calling thread. 
-	/// The calling thread may continue when the value becomes positive again.
-{
+/// A Semaphore is a synchronization object with the following 
+/// characteristics:
+/// A semaphore has a value that is constrained to be a non-negative
+/// integer and two atomic operations. The allowable operations are V 
+/// (here called set()) and P (here called wait()). A V (set()) operation 
+/// increases the value of the semaphore by one. 
+/// A P (wait()) operation decreases the value of the semaphore by one, 
+/// provided that can be done without violating the constraint that the 
+/// value be non-negative. A P (wait()) operation that is initiated when 
+/// the value of the semaphore is 0 suspends the calling thread. 
+/// The calling thread may continue when the value becomes positive again.
+class Foundation_API Semaphore: private SemaphoreImpl {
 public:
 	Semaphore(int n);
 	Semaphore(int n, int max);
@@ -64,19 +50,19 @@ public:
 	~Semaphore();
 		/// Destroys the semaphore.
 
-	void set();
+	bool set();
 		/// Increments the semaphore's value by one and
 		/// thus signals the semaphore. Another thread
 		/// waiting for the semaphore will be able
 		/// to continue.
 
-	void wait();
+	bool wait();
 		/// Waits for the semaphore to become signalled.
 		/// To become signalled, a semaphore's value must
 		/// be greater than zero. 
 		/// Decrements the semaphore's value by one.
 
-	void wait(long milliseconds);
+	bool wait(long milliseconds);
 		/// Waits for the semaphore to become signalled.
 		/// To become signalled, a semaphore's value must
 		/// be greater than zero.
@@ -103,30 +89,23 @@ private:
 };
 
 
-//
 // inlines
-//
-inline void Semaphore::set()
-{
-	setImpl();
+inline bool Semaphore::set() {
+	return setImpl();
 }
 
 
-inline void Semaphore::wait()
-{
-	waitImpl();
+inline bool Semaphore::wait() {
+	return waitImpl();
 }
 
 
-inline void Semaphore::wait(long milliseconds)
-{
-	if (!waitImpl(milliseconds))
-		throw TimeoutException();
+inline bool Semaphore::wait(long milliseconds) {
+	return waitImpl(milliseconds);
 }
 
 
-inline bool Semaphore::tryWait(long milliseconds)
-{
+inline bool Semaphore::tryWait(long milliseconds) {
 	return waitImpl(milliseconds);
 }
 
@@ -134,4 +113,4 @@ inline bool Semaphore::tryWait(long milliseconds)
 } // namespace Poco
 
 
-#endif // Foundation_Semaphore_INCLUDED
+#endif // Core_Semaphore_INCLUDED

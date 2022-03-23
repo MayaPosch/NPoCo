@@ -1,38 +1,24 @@
-//
-// Semaphore_VX.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Semaphore
-//
-// Definition of the SemaphoreImpl class for VxWorks.
-//
-// Copyright (c) 2004-20011, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Semaphore_VX.h - Definition of the SemaphoreImpl class for VxWorks.
+*/
 
 
-#ifndef Foundation_Semaphore_VX_INCLUDED
-#define Foundation_Semaphore_VX_INCLUDED
+#ifndef Core_Semaphore_VX_INCLUDED
+#define Core_Semaphore_VX_INCLUDED
 
 
-#include "Poco/Foundation.h"
-#include "Poco/Exception.h"
+#include "../Core.h"
 #include <semLib.h>
 
 
 namespace Poco {
 
-
-class Foundation_API SemaphoreImpl
-{
+class Foundation_API SemaphoreImpl {
 protected:
 	SemaphoreImpl(int n, int max);		
 	~SemaphoreImpl();
-	void setImpl();
-	void waitImpl();
+	bool setImpl();
+	bool waitImpl();
 	bool waitImpl(long milliseconds);
 	
 private:
@@ -40,17 +26,16 @@ private:
 };
 
 
-//
 // inlines
-//
-inline void SemaphoreImpl::setImpl()
-{
-	if (semGive(_sem) != OK)
-		throw SystemException("cannot signal semaphore");
+inline bool SemaphoreImpl::setImpl() {
+	if (semGive(_sem) != OK) {
+		return false;
+	}
+	
+	return true;
 }
-
 
 } // namespace Poco
 
 
-#endif // Foundation_Semaphore_VX_INCLUDED
+#endif // Core_Semaphore_VX_INCLUDED

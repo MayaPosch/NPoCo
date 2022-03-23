@@ -1,39 +1,25 @@
-//
-// Semaphore_POSIX.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Semaphore
-//
-// Definition of the SemaphoreImpl class for POSIX Threads.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Semaphore_POSIX.h - Definition of the SemaphoreImpl class for POSIX Threads.
+*/
 
 
-#ifndef Foundation_Semaphore_POSIX_INCLUDED
-#define Foundation_Semaphore_POSIX_INCLUDED
+#ifndef Core_Semaphore_POSIX_INCLUDED
+#define Core_Semaphore_POSIX_INCLUDED
 
 
-#include "Poco/Foundation.h"
-#include "Poco/Exception.h"
+#include "../Core.h"
 #include <pthread.h>
 #include <errno.h>
 
 
 namespace Poco {
 
-
-class Foundation_API SemaphoreImpl
-{
+class Foundation_API SemaphoreImpl {
 protected:
 	SemaphoreImpl(int n, int max);		
 	~SemaphoreImpl();
-	void setImpl();
-	void waitImpl();
+	bool setImpl();
+	bool waitImpl();
 	bool waitImpl(long milliseconds);
 	
 private:
@@ -44,27 +30,28 @@ private:
 };
 
 
-//
 // inlines
-//
-inline void SemaphoreImpl::setImpl()
-{
-	if (pthread_mutex_lock(&_mutex))	
-		throw SystemException("cannot signal semaphore (lock)");
-	if (_n < _max)
-	{
+inline bool SemaphoreImpl::setImpl() {
+	if (pthread_mutex_lock(&_mutex)) {	
+		//throw SystemException("cannot signal semaphore (lock)");
+		return false;
+	}
+	
+	if (_n < _max) {
 		++_n;
 	}
-	else
-	{
+	else {
 		pthread_mutex_unlock(&_mutex);
-		throw SystemException("cannot signal semaphore: count would exceed maximum");
+		//throw SystemException("cannot signal semaphore: count would exceed maximum");
+		return false;
 	}	
-	if (pthread_cond_signal(&_cond))
-	{
+	
+	if (pthread_cond_signal(&_cond)) {
 		pthread_mutex_unlock(&_mutex);
-		throw SystemException("cannot signal semaphore");
+		//throw SystemException("cannot signal semaphore");
+		return false;
 	}
+	
 	pthread_mutex_unlock(&_mutex);
 }
 
@@ -72,4 +59,4 @@ inline void SemaphoreImpl::setImpl()
 } // namespace Poco
 
 
-#endif // Foundation_Semaphore_POSIX_INCLUDED
+#endif // Core_Semaphore_POSIX_INCLUDED
