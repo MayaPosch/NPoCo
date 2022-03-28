@@ -48,6 +48,11 @@ net:
 	
 util:
 	$(MAKE) -C ./Util
+	
+test: test-core
+	
+test-core:
+	$(MAKE) -C ./core/test
 
 clean: clean-json clean-core clean-net clean-util
 
