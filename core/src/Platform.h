@@ -29,9 +29,12 @@
 #define POCO_OS_WINDOWS_NT    0x1001
 #define POCO_OS_WINDOWS_CE    0x1011
 #define POCO_OS_VMS           0x2001
+#define POCO_OS_FREERTOS	  0x3001
 
-
-#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+#if defined (__FREERTOS__)
+	#define POCO_OS_FAMILY_FREERTOS 1
+	#define POCO_OS POCO_OS_FREERTOS
+#elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS_FAMILY_BSD 1
 	#define POCO_OS POCO_OS_FREE_BSD
@@ -121,6 +124,7 @@
 #define POCO_ARCH_AARCH64 0x0f
 #define POCO_ARCH_ARM64   0x0f // same as POCO_ARCH_AARCH64
 #define POCO_ARCH_RISCV64 0x10
+#define POCO_ARCH_XTENSA  0x11
 
 
 #if defined(__ALPHA) || defined(__alpha) || defined(__alpha__) || defined(_M_ALPHA)
@@ -213,6 +217,9 @@
 	#define POCO_ARCH_BIG_ENDIAN 1
 #elif defined(__riscv) && (__riscv_xlen == 64)
 	#define POCO_ARCH POCO_ARCH_RISCV64
+	#define POCO_ARCH_LITTLE_ENDIAN 1
+#elif defined (__XTENSA__)
+	#define POCO_ARCH POCO_ARCH_XTENSA
 	#define POCO_ARCH_LITTLE_ENDIAN 1
 #endif
 

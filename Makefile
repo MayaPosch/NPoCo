@@ -44,10 +44,10 @@ core:
 	$(MAKE) -C ./core
 
 net:
-	$(MAKE) -C ./Net
+	$(MAKE) -C ./net
 	
 util:
-	$(MAKE) -C ./Util
+	$(MAKE) -C ./util
 	
 test: test-core
 	
@@ -60,10 +60,10 @@ clean-core:
 	$(MAKE) -C ./core clean
 	
 clean-net:
-	$(MAKE) -C ./Net clean
+	$(MAKE) -C ./net clean
 	
 clean-util:
-	$(MAKE) -C ./Util clean
+	$(MAKE) -C ./util clean
 	
 clean-json:
 	$(MAKE) -C ./JSON clean
