@@ -31,7 +31,7 @@ class Thread2 : public Poco::Runnable {
 public:
 	virtual void run() {
 		// Wait for 100 ms.
-		Poco::Thread::current()->sleep(100);
+		Poco::Thread::current()->sleep(5000);
 		
 		// Trigger CV.
 		gcv.signal();
