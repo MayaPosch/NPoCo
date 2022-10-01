@@ -3,7 +3,7 @@
 */
 
 
-#include "Poco/DirectoryIterator.h"
+#include "DirectoryIterator.h"
 
 
 #if defined(POCO_OS_FAMILY_WINDOWS)

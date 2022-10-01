@@ -195,8 +195,7 @@ std::string EnvironmentImpl::nodeNameImpl()
 }
 
 
-void EnvironmentImpl::nodeIdImpl(NodeId& id)
-{
+bool EnvironmentImpl::nodeIdImpl(NodeId& id) {
 	std::memset(&id, 0, sizeof(id));
 
 	PIP_ADAPTER_INFO pAdapterInfo;
@@ -213,7 +212,7 @@ void EnvironmentImpl::nodeIdImpl(NodeId& id)
 	}
 	else if (rc != ERROR_SUCCESS)
 	{
-		return;
+		return false;
 	}
 	if (GetAdaptersInfo(pAdapterInfo, &len) == NO_ERROR) 
 	{
@@ -230,6 +229,8 @@ void EnvironmentImpl::nodeIdImpl(NodeId& id)
 		}
 	}
 	delete [] reinterpret_cast<char*>(pAdapterInfo);
+	
+	return true;
 }
 
 

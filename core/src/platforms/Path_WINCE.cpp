@@ -1,24 +1,15 @@
-//
-// Path_WIN32U.cpp
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  Path
-//
-// Copyright (c) 2006-2010, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Path_WIN32U.cpp
+*/
 
 
-#include "Poco/Path_WINCE.h"
-#include "Poco/Environment_WINCE.h"
-#include "Poco/UnicodeConverter.h"
-#include "Poco/Buffer.h"
-#include "Poco/Environment.h"
-#include "Poco/Exception.h"
-#include "Poco/UnWindows.h"
+#include "Path_WINCE.h"
+#include "Environment_WINCE.h"
+#include "../UnicodeConverter.h"
+#include "../Buffer.h"
+#include "../Environment.h"
+//#include "Poco/Exception.h"
+#include "UnWindows.h"
 
 
 namespace Poco {

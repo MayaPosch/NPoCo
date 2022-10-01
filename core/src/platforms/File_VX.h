@@ -7,7 +7,7 @@
 #define Core_File_VX_INCLUDED
 
 
-#include "Poco/Foundation.h"
+#include "../Core.h"
 
 
 namespace Poco {

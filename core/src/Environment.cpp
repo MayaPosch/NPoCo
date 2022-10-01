@@ -100,7 +100,7 @@ std::string Environment::nodeId()
 
 void Environment::nodeId(NodeId& id)
 {
-	return EnvironmentImpl::nodeIdImpl(id);
+	EnvironmentImpl::nodeIdImpl(id);
 }
 
 

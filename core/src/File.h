@@ -246,7 +246,7 @@ public:
 	bool operator >  (const File& file) const;
 	bool operator >= (const File& file) const;
 
-	//static void handleLastError(const std::string& path);
+	static void handleLastError(const std::string& path);
 		/// For internal use only. Throws an appropriate
 		/// exception for the last file-related error.
 

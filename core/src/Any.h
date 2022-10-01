@@ -201,17 +201,17 @@ public:
 		else
 		{
 			Any tmp(*this);
-			try
-			{
+			//try
+			//{
 				if (_valueHolder.isLocal()) destruct();
 				construct(other);
 				other = tmp;
-			}
+			/* }
 			catch (...)
 			{
 				construct(tmp);
 				throw;
-			}
+			} */
 		}
 
 		return *this;
@@ -521,7 +521,7 @@ ValueType AnyCast(Any& operand)
 			s.append(typeid(ValueType).name());
 			s.append(1, ')');
 		}
-		throw BadCastException(s);
+		//throw BadCastException(s);
 	}
 	return *result;
 }
@@ -563,7 +563,7 @@ const ValueType& RefAnyCast(const Any & operand)
 			s.append(typeid(ValueType).name());
 			s.append(1, ')');
 		}
-		throw BadCastException(s);
+		//throw BadCastException(s);
 	}
 	return *result;
 }
@@ -588,7 +588,7 @@ ValueType& RefAnyCast(Any& operand)
 			s.append(typeid(ValueType).name());
 			s.append(1, ')');
 		}
-		throw BadCastException(s);
+		//throw BadCastException(s);
 	}
 	return *result;
 }

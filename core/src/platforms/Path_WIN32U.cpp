@@ -1,23 +1,14 @@
-//
-// Path_WIN32U.cpp
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  Path
-//
-// Copyright (c) 2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Path_WIN32U.cpp 
+*/
 
 
-#include "Poco/Path_WIN32U.h"
-#include "Poco/Environment_WIN32U.h"
-#include "Poco/UnicodeConverter.h"
-#include "Poco/Buffer.h"
-#include "Poco/Exception.h"
-#include "Poco/UnWindows.h"
+#include "Path_WIN32U.h"
+#include "Environment_WIN32U.h"
+#include "../UnicodeConverter.h"
+#include "../Buffer.h"
+//#include "Poco/Exception.h"
+#include "UnWindows.h"
 
 
 namespace Poco {
@@ -39,7 +30,8 @@ std::string PathImpl::currentImpl()
 			return result;
 		}
 	}
-	throw SystemException("Cannot get current directory");
+	//throw SystemException("Cannot get current directory");
+	return std::string();
 }
 
 
@@ -50,13 +42,17 @@ std::string PathImpl::systemImpl()
 	if (n > 0)
 	{
 		n = GetLongPathNameW(buffer.begin(), buffer.begin(), static_cast<DWORD>(buffer.size()));
-		if (n <= 0) throw SystemException("Cannot get system directory long path name");
+		if (n <= 0) {//throw SystemException("Cannot get system directory long path name");
+			return std::string();
+		}
+		
 		std::string result;
 		UnicodeConverter::toUTF8(buffer.begin(), result);
 		if (result[result.size() - 1] != '\\') result.append("\\");
 		return result;
 	}
-	throw SystemException("Cannot get temporary directory path");
+	//throw SystemException("Cannot get temporary directory path");
+	return std::string();
 }
 
 
@@ -89,14 +85,16 @@ std::string PathImpl::configHomeImpl()
 	std::string result;
 
 	// if APPDATA environment variable no exist, return home directory instead
-	try
-	{
+	//try
+	//{
 		result = EnvironmentImpl::getImpl("APPDATA");
-	}
+	/*}
 	catch (NotFoundException&)
-	{
+	{*/
+	if (result.size() < 1) {
 		result = homeImpl();
 	}
+	//}
 
 	std::string::size_type n = result.size();
 	if (n > 0 && result[n - 1] != '\\')
@@ -110,12 +108,12 @@ std::string PathImpl::dataHomeImpl()
 	std::string result;
 
 	// if LOCALAPPDATA environment variable no exist, return config home instead
-	try
-	{
+	//try
+	//{
 		result = EnvironmentImpl::getImpl("LOCALAPPDATA");
-	}
-	catch (NotFoundException&)
-	{
+	//}
+	//catch (NotFoundException&)
+	if (result.size() < 1) {
 		result = configHomeImpl();
 	}
 
@@ -145,14 +143,18 @@ std::string PathImpl::tempImpl()
 	if (n > 0)
 	{
 		n = GetLongPathNameW(buffer.begin(), buffer.begin(), static_cast<DWORD>(buffer.size()));
-		if (n <= 0) throw SystemException("Cannot get temporary directory long path name");
+		if (n <= 0) { // throw SystemException("Cannot get temporary directory long path name");
+			return std::string();
+		}
+		
 		std::string result;
 		UnicodeConverter::toUTF8(buffer.begin(), result);
 		if (result[result.size() - 1] != '\\')
 			result.append("\\");
 		return result;
 	}
-	throw SystemException("Cannot get temporary directory path");
+	//throw SystemException("Cannot get temporary directory path");
+	return std::string();
 }
 
 
@@ -161,12 +163,12 @@ std::string PathImpl::configImpl()
 	std::string result;
 
 	// if PROGRAMDATA environment variable not exist, return system directory instead
-	try
-	{
+	//try
+	//{
 		result = EnvironmentImpl::getImpl("PROGRAMDATA");
-	}
-	catch (NotFoundException&)
-	{
+	//}
+	//catch (NotFoundException&)
+	if (result.size() < 1) {
 		result = systemImpl();
 	}
 

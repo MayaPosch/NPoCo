@@ -1,24 +1,13 @@
-//
-// Path_UNIX.h
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  Path
-//
-// Definition of the PathImpl class fo rUnix.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Path_UNIX.h - Definition of the PathImpl class for Unix.
+*/
 
 
-#ifndef Foundation_Path_UNIX_INCLUDED
-#define Foundation_Path_UNIX_INCLUDED
+#ifndef Core_Path_UNIX_INCLUDED
+#define Core_Path_UNIX_INCLUDED
 
 
-#include "Poco/Foundation.h"
+#include "../Core.h"
 #include <vector>
 
 

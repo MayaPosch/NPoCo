@@ -5,21 +5,21 @@
 
 #include "Path.h"
 #include "File.h"
-#include "Poco/StringTokenizer.h"
+#include "StringTokenizer.h"
 #if defined(_WIN32)
-#include "Poco/UnicodeConverter.h"
-#include "Poco/Buffer.h"
+#include "UnicodeConverter.h"
+#include "Buffer.h"
 #endif
 #include <algorithm>
 
 
 #if defined(POCO_OS_FAMILY_UNIX)
-#include "Path_UNIX.cpp"
+#include "platforms/Path_UNIX.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
-#include "Path_WINCE.cpp"
+#include "platforms/Path_WINCE.cpp"
 #else
-#include "Path_WIN32U.cpp"
+#include "platforms/Path_WIN32U.cpp"
 #endif
 #endif
 
@@ -762,11 +762,20 @@ void Path::parseWindows(const std::string& path)
 			char d = *it++;
 			if (it != end && *it == ':') // drive letter
 			{
-				if (_absolute || !((d >= 'a' && d <= 'z') || (d >= 'A' && d <= 'Z'))) throw PathSyntaxException(path);
+				if (_absolute || !((d >= 'a' && d <= 'z') || (d >= 'A' && d <= 'Z'))) {
+					//throw PathSyntaxException(path);
+					// TODO: handle error.
+					return;
+				}
+				
 				_absolute = true;
 				_device += d;
 				++it;
-				if (it == end || (*it != '\\' && *it != '/')) throw PathSyntaxException(path);
+				if (it == end || (*it != '\\' && *it != '/')) { //throw PathSyntaxException(path);
+					// TODO: handle error.
+					return;
+				}
+				
 				++it;
 			}
 			else --it;
@@ -861,13 +870,25 @@ void Path::parseVMS(const std::string& path)
 							}
 							if (it != end && *it != ']') ++it;
 						}
-						if (it == end) throw PathSyntaxException(path);
+						
+						if (it == end) { ///throw PathSyntaxException(path);
+							// TODO: handle error.
+							return;
+						}
+							
 						++it;
-						if (it != end && *it == '[')
-						{
-							if (!_absolute) throw PathSyntaxException(path);
+						if (it != end && *it == '[') {
+							if (!_absolute) { //throw PathSyntaxException(path);
+								// TODO: handle error.
+								return;
+							}
+							
 							++it;
-							if (it != end && *it == '.') throw PathSyntaxException(path);
+							if (it != end && *it == '.') { //throw PathSyntaxException(path);
+								// TODO: handle error.
+								return;
+							}
+							
 							int d = int(_dirs.size());
 							while (it != end && *it != ']')
 							{
@@ -887,7 +908,12 @@ void Path::parseVMS(const std::string& path)
 								}
 								if (it != end && *it != ']') ++it;
 							}
-							if (it == end) throw PathSyntaxException(path);
+							
+							if (it == end) { //throw PathSyntaxException(path);
+								// TODO: handle error.
+								return;
+							}
+							
 							++it;
 						}
 					}

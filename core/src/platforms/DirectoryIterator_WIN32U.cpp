@@ -5,9 +5,9 @@
 
 #include "DirectoryIterator_WIN32U.h"
 #if defined(_WIN32_WCE)
-#include "platforms/File_WINCE.h"
+#include "File_WINCE.h"
 #else
-#include "platforms/File_WIN32U.h"
+#include "File_WIN32U.h"
 #endif
 #include "../Path.h"
 #include "../UnicodeConverter.h"
@@ -28,8 +28,11 @@ DirectoryIteratorImpl::DirectoryIteratorImpl(const std::string& path):
 	_fh = FindFirstFileW(uFindPath.c_str(), &_fd);
 	if (_fh == INVALID_HANDLE_VALUE)
 	{
-		if (GetLastError() != ERROR_NO_MORE_FILES)
-			File::handleLastError(path);
+		if (GetLastError() != ERROR_NO_MORE_FILES) {
+			//File::handleLastError(path);
+			// FIXME: handle error.
+		}
+			
 	}
 	else
 	{

@@ -217,8 +217,12 @@ bool File::copyTo(const std::string& path, int options) const {
 	
 	if (isDirectory()) {
 		return copyDirectory(dest.toString(), options);
-	else
+	}
+	else {
 		return copyToImpl(dest.toString(), options);
+	}
+	
+	return true;
 }
 
 
@@ -260,14 +264,11 @@ bool File::linkTo(const std::string& path, LinkType type) const {
 }
 
 
-bool File::remove(bool recursive)
-{
-	if (recursive && !isLink() && isDirectory())
-	{
+bool File::remove(bool recursive) {
+	if (recursive && !isLink() && isDirectory()) {
 		std::vector<File> files;
 		list(files);
-		for (auto& f: files)
-		{
+		for (auto& f: files) {
 			f.remove(true);
 		}
 
@@ -282,15 +283,13 @@ bool File::remove(bool recursive)
 
 		int retry = 8;
 		long sleep = 10;
-		while (retry > 0)
-		{
-			try
-			{
+		while (retry > 0) {
+			/* try {
 				removeImpl();
 				retry = 0;
 			}
-			catch (DirectoryNotEmptyException&)
-			{
+			catch (DirectoryNotEmptyException&) { */
+			if (!removeImpl()) {
 				if (--retry == 0) {
 					//throw;
 					return false;
@@ -299,10 +298,12 @@ bool File::remove(bool recursive)
 				Poco::Thread::sleep(sleep);
 				sleep *= 2;
 			}
+			else {
+				retry = 0;
+			}
 		}
 	}
-	else
-	{
+	else {
 		return removeImpl();
 	}
 	
@@ -334,13 +335,13 @@ void File::createDirectories()
 			File f(p);
 			f.createDirectories();
 		}
-		try
-		{
+		//try
+		//{
 			createDirectoryImpl();
-		}
-		catch (FileExistsException&)
-		{
-		}
+		//}
+		//catch (FileExistsException&)
+		//{
+		//}
 	}
 }
 
@@ -389,10 +390,10 @@ void File::list(std::vector<File>& files) const
 }
 
 
-/* void File::handleLastError(const std::string& path)
+void File::handleLastError(const std::string& /*path*/)
 {
-	handleLastErrorImpl(path);
-} */
+	//handleLastErrorImpl(path);
+}
 
 
 } // namespace Poco

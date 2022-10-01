@@ -1,28 +1,17 @@
-//
-// ActiveMethod.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  ActiveObjects
-//
-// Definition of the ActiveMethod class.
-//
-// Copyright (c) 2004-2007, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	ActiveMethod.h - Definition of the ActiveMethod class.
+*/
 
 
-#ifndef Foundation_ActiveMethod_INCLUDED
-#define Foundation_ActiveMethod_INCLUDED
+#ifndef Core_ActiveMethod_INCLUDED
+#define Core_ActiveMethod_INCLUDED
 
 
-#include "Poco/Foundation.h"
-#include "Poco/ActiveResult.h"
-#include "Poco/ActiveRunnable.h"
-#include "Poco/ActiveStarter.h"
-#include "Poco/AutoPtr.h"
+#include "../Core.h"
+#include "../ActiveResult.h"
+#include "../ActiveRunnable.h"
+#include "../ActiveStarter.h"
+#include "../AutoPtr.h"
 
 
 namespace Poco {
@@ -215,4 +204,4 @@ private:
 } // namespace Poco
 
 
-#endif // Foundation_ActiveMethod_INCLUDED
+#endif // Core_ActiveMethod_INCLUDED

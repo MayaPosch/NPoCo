@@ -1,24 +1,13 @@
-//
-// Path_WIN32U.h
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  Path
-//
-// Definition of the PathImpl class for WIN32.
-//
-// Copyright (c) 2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Path_WIN32U.h - Definition of the PathImpl class for WIN32.
+*/
 
 
-#ifndef Foundation_Path_WIN32U_INCLUDED
-#define Foundation_Path_WIN32U_INCLUDED
+#ifndef Core_Path_WIN32U_INCLUDED
+#define Core_Path_WIN32U_INCLUDED
 
 
-#include "Poco/Foundation.h"
+#include "../Core.h"
 #include <vector>
 
 
@@ -51,4 +40,4 @@ public:
 } // namespace Poco
 
 
-#endif // Foundation_Path_WIN32U_INCLUDED
+#endif // Core_Path_WIN32U_INCLUDED

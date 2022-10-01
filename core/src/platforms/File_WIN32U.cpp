@@ -16,7 +16,7 @@ public:
 	FileHandle(const std::string& path, const std::wstring& upath, DWORD access, DWORD share, DWORD disp) {
 		_h = CreateFileW(upath.c_str(), access, share, 0, disp, 0, 0);
 		if (_h == INVALID_HANDLE_VALUE) {
-			FileImpl::handleLastErrorImpl(path);
+			//FileImpl::handleLastErrorImpl(path);
 		}
 	}
 
@@ -276,7 +276,7 @@ bool FileImpl::setWriteableImpl(bool flag) {
 	poco_assert (!_path.empty());
 
 	DWORD attr = GetFileAttributesW(_upath.c_str());
-	if (attr == -1) {
+	if (attr == (DWORD) -1) {
 		//handleLastErrorImpl(_path);
 		return false;
 	}
@@ -286,7 +286,7 @@ bool FileImpl::setWriteableImpl(bool flag) {
 	else
 		attr |= FILE_ATTRIBUTE_READONLY;
 	
-	if (SetFileAttributesW(_upath.c_str(), attr) == 0) {
+	if (SetFileAttributesW(_upath.c_str(), attr) == (DWORD) 0) {
 		//handleLastErrorImpl(_path);
 		return false;
 	}
@@ -321,7 +321,7 @@ bool FileImpl::renameToImpl(const std::string& path, int options) {
 	std::wstring upath;
 	convertPath(path, upath);
 	if (options & OPT_FAIL_ON_OVERWRITE_IMPL) {
-		if (MoveFileExW(_upath.c_str(), upath.c_str(), NULL) == 0) {
+		if (MoveFileExW(_upath.c_str(), upath.c_str(), 0) == 0) {
 			//handleLastErrorImpl(_path);
 			return false;
 		}
@@ -375,6 +375,7 @@ bool FileImpl::removeImpl() {
 		if (RemoveDirectoryW(_upath.c_str()) == 0) {
 			//handleLastErrorImpl(_path);
 			return false;
+		}
 	}
 	else {
 		if (DeleteFileW(_upath.c_str()) == 0) {
@@ -395,11 +396,13 @@ bool FileImpl::createFileImpl() {
 		CloseHandle(hFile);
 		return true;
 	}
-	else if (GetLastError() == ERROR_FILE_EXISTS)
+	else if (GetLastError() == ERROR_FILE_EXISTS) {
 		return false;
-	else
+	}
+	else {
 		//handleLastErrorImpl(_path);
 		return false;
+	}
 	
 	return false;
 }

@@ -222,12 +222,12 @@ namespace
 					str << type;
 				}
 			}
-		}
+		//}
 		/* catch (Poco::BadCastException&)
 		{
 			str << "[ERRFMT]";
 		} */
-		result.append(str.str());
+		//result.append(str.str());
 	}
 }
 

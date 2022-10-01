@@ -1,32 +1,20 @@
-//
-// DirectoryIterator_WIN32U.h
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  DirectoryIterator
-//
-// Definition of the DirectoryIteratorImpl class for WIN32.
-//
-// Copyright (c) 2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	DirectoryIterator_WIN32U.h - Definition of the DirectoryIteratorImpl class for WIN32.
+*/
 
 
-#ifndef Foundation_DirectoryIterator_WIN32U_INCLUDED
-#define Foundation_DirectoryIterator_WIN32U_INCLUDED
+#ifndef Core_DirectoryIterator_WIN32U_INCLUDED
+#define Core_DirectoryIterator_WIN32U_INCLUDED
 
 
-#include "Poco/Foundation.h"
-#include "Poco/UnWindows.h"
+#include "../Core.h"
+#include "UnWindows.h"
 
 
 namespace Poco {
 
 
-class Foundation_API DirectoryIteratorImpl
-{
+class Foundation_API DirectoryIteratorImpl {
 public:
 	DirectoryIteratorImpl(const std::string& path);
 	~DirectoryIteratorImpl();
@@ -47,27 +35,22 @@ private:
 
 //
 // inlines
-//
-const std::string& DirectoryIteratorImpl::get() const
-{
+const std::string& DirectoryIteratorImpl::get() const {
 	return _current;
 }
 
 
-inline void DirectoryIteratorImpl::duplicate()
-{
+inline void DirectoryIteratorImpl::duplicate() {
 	++_rc;
 }
 
 
-inline void DirectoryIteratorImpl::release()
-{
-	if (--_rc == 0)
-		delete this;
+inline void DirectoryIteratorImpl::release() {
+	if (--_rc == 0) { delete this; }
 }
 
 
 } // namespace Poco
 
 
-#endif // Foundation_DirectoryIterator_WIN32U_INCLUDED
+#endif // Core_DirectoryIterator_WIN32U_INCLUDED

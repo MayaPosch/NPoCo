@@ -1,21 +1,12 @@
-//
-// Path_UNIX.cpp
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  Path
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	Path_UNIX.cpp 
+*/
 
 
-#include "Poco/Path_UNIX.h"
-#include "Poco/Exception.h"
-#include "Poco/Environment_UNIX.h"
-#include "Poco/Ascii.h"
+#include "Path_UNIX.h"
+//#include "Poco/Exception.h"
+#include "Environment_UNIX.h"
+#include "../Ascii.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -39,8 +30,8 @@ std::string PathImpl::currentImpl()
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)))
 		path = cwd;
-	else
-		throw SystemException("cannot get current directory");
+	//else
+		//throw SystemException("cannot get current directory");
 	std::string::size_type n = path.size();
 	if (n > 0 && path[n - 1] != '/') path.append("/");
 	return path;
