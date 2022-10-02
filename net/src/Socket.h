@@ -76,7 +76,7 @@ public:
 	bool operator >= (const Socket& socket) const;
 		/// Compares the SocketImpl pointers.
 		
-	void close();
+	bool close();
 		/// Closes the socket.
 
 	static int select(SocketList& readList, SocketList& writeList, SocketList& exceptList, const Poco::Timespan& timeout);
@@ -392,9 +392,9 @@ inline bool Socket::operator >= (const Socket& socket) const
 }
 
 
-inline void Socket::close()
+inline bool Socket::close()
 {
-	_pImpl->close();
+	return _pImpl->close();
 }
 
 

@@ -98,9 +98,8 @@ void StreamSocket::shutdownSend()
 }
 
 
-void StreamSocket::shutdown()
-{
-	impl()->shutdown();
+bool StreamSocket::shutdown() {
+	return impl()->shutdown();
 }
 
 

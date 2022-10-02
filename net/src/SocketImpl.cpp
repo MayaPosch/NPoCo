@@ -302,7 +302,10 @@ bool SocketImpl::close() {
 	if (_sockfd != POCO_INVALID_SOCKET) {
 		poco_closesocket(_sockfd);
 		_sockfd = POCO_INVALID_SOCKET;
+		return true;
 	}
+	
+	return false;
 }
 
 

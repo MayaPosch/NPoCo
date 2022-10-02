@@ -14,7 +14,7 @@
 
 
 #if defined(POCO_OS_FAMILY_WINDOWS)
-	#include "Poco/UnWindows.h"
+	#include "npoco/platforms/UnWindows.h"
 	#include <winsock2.h>
 	#include <ws2tcpip.h>
 	#include <ws2def.h>

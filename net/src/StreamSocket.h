@@ -82,7 +82,7 @@ public:
 	void shutdownSend();
 		/// Shuts down the sending part of the socket connection.
 
-	void shutdown();
+	bool shutdown();
 		/// Shuts down both the receiving and the sending part
 		/// of the socket connection.
 

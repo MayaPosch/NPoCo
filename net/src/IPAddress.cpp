@@ -6,7 +6,7 @@
 #include "IPAddress.h"
 //#include "Poco/Net/NetException.h"
 #include <npoco/RefCountedObject.h>
-#include <Poco/NumberFormatter.h>
+#include <npoco/NumberFormatter.h>
 #include <npoco/BinaryReader.h>
 #include <npoco/BinaryWriter.h>
 #include <npoco/NPString.h>
