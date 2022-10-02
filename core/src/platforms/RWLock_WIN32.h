@@ -7,7 +7,7 @@
 #define Core_RWLock_WIN32_INCLUDED
 
 
-#include "Core.h"
+#include "../Core.h"
 #include "UnWindows.h"
 
 

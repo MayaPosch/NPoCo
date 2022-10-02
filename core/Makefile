@@ -7,7 +7,7 @@ include ../$(TARGET).mk
 OUTPUT = libNPocoCore
 VERSION := 0.1
 
-INCLUDE = $(STD_INCLUDE) -Isrc -I$(TOP)/build/$(TARGET)/npoco/include
+INCLUDE = $(STD_INCLUDE) -I$(TOP)/build/$(TARGET)/npoco/include
 CFLAGS = $(STD_CFLAGS) $(INCLUDE)
 CXXFLAGS := $(STD_CXXFLAGS) $(INCLUDE)
 SHARED_FLAGS := -fPIC -shared -Wl,-soname,$(OUTPUT).so.$(VERSION)

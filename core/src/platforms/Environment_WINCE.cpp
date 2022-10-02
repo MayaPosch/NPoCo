@@ -7,7 +7,7 @@
 #include "../UnicodeConverter.h"
 #include "../NPString.h"
 #include "../Path.h"
-#include "Poco/NumberFormatter.h"
+#include "../NumberFormatter.h"
 #include <sstream>
 #include <cstring>
 #include <windows.h>

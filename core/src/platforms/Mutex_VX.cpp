@@ -3,7 +3,7 @@
 */
 
 
-#include "Poco/Mutex_VX.h"
+#include "Mutex_VX.h"
 #include <sysLib.h>
 
 

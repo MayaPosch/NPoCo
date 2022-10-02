@@ -9,11 +9,11 @@
 
 #include "Core.h"
 #include "../Format.h"
-#include ".//SharedPtr.h"
+#include "../SharedPtr.h"
 #include "../OrderedMap.h"
 #include "../OrderedSet.h"
 #include "VarHolder.h"
-#include "Poco/Dynamic/VarIterator.h"
+#include "VarIterator.h"
 #include <typeinfo>
 #include <map>
 #include <set>

@@ -239,7 +239,7 @@ public:
 		else {
 			//throw NullPointerException();
 			// TODO: Handle Nullpointer.
-			return 0;
+			return *_ptr;
 		}
 	}
 

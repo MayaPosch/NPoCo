@@ -1,24 +1,13 @@
-//
-// VarIterator.h
-//
-// Library: Foundation
-// Package: Dynamic
-// Module:  VarIterator
-//
-// Definition of the VarIterator class.
-//
-// Copyright (c) 2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	VarIterator.h - Definition of the VarIterator class.
+*/
 
 
-#ifndef Foundation_VarIterator_INCLUDED
-#define Foundation_VarIterator_INCLUDED
+#ifndef Core_VarIterator_INCLUDED
+#define Core_VarIterator_INCLUDED
 
 
-#include "Poco/Exception.h"
+//#include "Poco/Exception.h"
 #include <iterator>
 #include <algorithm>
 
@@ -152,4 +141,4 @@ namespace std
 }
 
 
-#endif // Foundation_VarIterator_INCLUDED
+#endif // Core_VarIterator_INCLUDED
