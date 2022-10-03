@@ -14,23 +14,15 @@ SHARED_FLAGS := -fPIC -shared -Wl,-soname,$(OUTPUT).so.$(VERSION)
 
 OBJROOT := ../build/$(TARGET)/npoco/obj
 INCLOUT := $(TOP)/build/$(TARGET)/npoco/include/npoco
-HEADERS := $(wildcard src/*.h) \
-			$(wildcard src/platforms/*.h)
-HTARGET := $(addprefix $(INCLOUT)/,$(notdir $(wildcard src/*.h))) \
-			$(addprefix $(INCLOUT)/platforms/,$(notdir $(wildcard src/platforms/*.h)))
+HEADERS := $(notdir $(wildcard src/*.h)) \
+			$(addprefix platforms/,$(notdir $(wildcard src/platforms/*.h))) \
+			$(addprefix Dynamic/,$(notdir $(wildcard src/Dynamic/*.h)))
 LD_FLAGS := $(STD_LDFLAGS)
 LIBS := $(STD_LIBS) -lz
 
 
 CSOURCES := $(wildcard src/*.c)
 SOURCES := $(wildcard src/*.cpp)
-
-# ifneq ($(TARGET_OS), windows)
-# SOURCES += SyslogChannel.cpp
-# else
-# SOURCES += WindowsConsoleChannel.cpp \
-# EventLogChannel.cpp
-# endif
 
 COBJECTS := $(addprefix $(OBJROOT)/core/static/,$(notdir $(CSOURCES:.c=.o)))
 SHARED_COBJECTS := $(addprefix $(OBJROOT)/core/shared/,$(notdir $(CSOURCES:.c=.o)))
@@ -40,7 +32,7 @@ SHARED_OBJECTS := $(addprefix $(OBJROOT)/core/shared/,$(notdir $(SOURCES:.cpp=.o
 #$(info Headers are [${HEADERS}])
 
 all: makedir objfile $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).a \
-		$(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).so.$(VERSION) $(HTARGET)
+		$(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).so.$(VERSION) $(HEADERS)
 		
 objfile:
 	$(file >$(TOP)/build/$(TARGET)/npoco/obj/core/shared/s_objects.psr, $(SHARED_OBJECTS) $(SHARED_COBJECTS))
@@ -64,8 +56,8 @@ makedir:
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/include/npoco/Dynamic
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/include/npoco/platforms
 	
-$(INCLOUT)/%.h: $(HEADERS)
-	$(CP) $< $@
+%.h:
+	$(CP) src/$@ $(INCLOUT)/$@
 
 $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).a: $(OBJECTS) $(COBJECTS)
 	-rm -f $@
