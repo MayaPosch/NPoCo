@@ -17,7 +17,7 @@ INCLOUT := $(TOP)/build/$(TARGET)/npoco/include/npoco
 HEADERS := $(wildcard src/*.h) \
 			$(wildcard src/platforms/*.h)
 HTARGET := $(addprefix $(INCLOUT)/,$(notdir $(wildcard src/*.h))) \
-			$(addprefix $(INCLOUT)/,$(notdir $(wildcard src/platforms/*.h)))
+			$(addprefix $(INCLOUT)/platforms/,$(notdir $(wildcard src/platforms/*.h)))
 LD_FLAGS := $(STD_LDFLAGS)
 LIBS := $(STD_LIBS) -lz
 
@@ -62,6 +62,7 @@ makedir:
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/obj/core/shared
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/lib
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/include/npoco/Dynamic
+	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/include/npoco/platforms
 	
 $(INCLOUT)/%.h: $(HEADERS)
 	$(CP) $< $@
