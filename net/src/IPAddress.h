@@ -377,6 +377,7 @@ inline IPAddress::Ptr IPAddress::pImpl() const
 	if (_pImpl) return _pImpl;
 	//throw NullPointerException("IPaddress implementation pointer is NULL.");
 	// TODO: Handle error.
+	return _pImpl;
 }
 
 

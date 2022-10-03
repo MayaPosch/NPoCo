@@ -8,9 +8,7 @@
 
 
 #include "Net.h"
-#include "SocketDefs.h"
-#include "IPAddress.h"
-//#include "Poco/Net/SocketAddressImpl.h"
+#include "SocketAddressImpl.h"
 #include <ostream>
 #include <iostream>
 
@@ -22,85 +20,16 @@ class BinaryWriter;
 
 namespace Net {
 
-	struct SockAddr {
-
-#if _WIN32
-		typedef u_short sa_family_t;
-		typedef u_short in_port_t;
-#endif
-
-		struct SockAddrIPv4 {
-			in_port_t 	sin_port = 0;
-			in_addr		sin_addr;
-		};
-
-#if defined(POCO_HAVE_IPv6)
-		struct SockAddrIPv6 {
-			in_port_t 	sin_port = 0;
-			in6_addr	sin_addr;
-			uint32_t	sin_scope_id;
-		};
-#endif
-
-#if defined(POCO_OS_FAMILY_UNIX)
-		struct SockAddrUnix {
-			char		sun_path[108];
-		};
-#endif
-
-		sa_family_t	sin_family = AF_UNSPEC;
-
-		union
-		{
-			SockAddrIPv4 ipv4;
-#if defined(POCO_HAVE_IPv6)
-			SockAddrIPv6 ipv6;
-#endif
-#if defined(POCO_OS_FAMILY_UNIX)
-			SockAddrUnix local;
-#endif
-		};
-
-		SockAddr()
-			: ipv4(SockAddrIPv4() )
-		{}
-
-		SockAddr& operator=(SockAddrIPv4 const& a)
-		{
-			sin_family = AF_INET;
-			ipv4.sin_port = a.sin_port;
-			ipv4.sin_addr = a.sin_addr;
-			return *this;
-		}
-
-#if defined(POCO_HAVE_IPv6)
-		SockAddr& operator=(SockAddrIPv6 const& a)
-		{
-			sin_family = AF_INET6;
-			ipv6.sin_port = a.sin_port;
-			ipv6.sin_addr = a.sin_addr;
-			ipv6.sin_scope_id = a.sin_scope_id;
-			return *this;
-		}
-#endif
-
-#if defined(POCO_OS_FAMILY_UNIX)
-		SockAddr& operator=(SockAddrUnix const& a) {
-			sin_family = AF_UNIX;
-			strncpy(local.sun_path, a.sun_path, strlen(a.sun_path));
-			return *this;
-		}
-#endif
-	};
-
 
 class IPAddress;
 
-/// This class represents an internet (IP) endpoint/socket
-/// address. The address can belong either to the
-/// IPv4 or the IPv6 address family and consists of a
-/// host address and a port number.
-class Net_API SocketAddress {
+
+class Net_API SocketAddress
+	/// This class represents an internet (IP) endpoint/socket
+	/// address. The address can belong either to the
+	/// IPv4 or the IPv6 address family and consists of a
+	/// host address and a port number.
+{
 public:
 	// The following declarations keep the Family type
 	// backwards compatible with the previously used
@@ -247,20 +176,18 @@ public:
 	};
 
 protected:
-	bool init(const IPAddress& hostAddress, Poco::UInt16 portNumber);
-	bool init(const std::string& hostAddress, Poco::UInt16 portNumber);
-	bool init(Family family, const std::string& hostAddress, Poco::UInt16 portNumber);
-	bool init(Family family, const std::string& address);
-	bool init(const std::string& hostAndPort);
+	void init(const IPAddress& hostAddress, Poco::UInt16 portNumber);
+	void init(const std::string& hostAddress, Poco::UInt16 portNumber);
+	void init(Family family, const std::string& hostAddress, Poco::UInt16 portNumber);
+	void init(Family family, const std::string& address);
+	void init(const std::string& hostAndPort);
 	Poco::UInt16 resolveService(const std::string& service);
 
 private:
-	//typedef Poco::Net::Impl::SocketAddressImpl Impl;
-	//typedef Poco::AutoPtr<Impl> Ptr;
+	typedef Poco::Net::Impl::SocketAddressImpl Impl;
+	typedef Poco::AutoPtr<Impl> Ptr;
 
-	//Ptr pImpl() const;
-
-	SockAddr sockAddr;
+	Ptr pImpl() const;
 
 	void newIPv4();
 	void newIPv4(const sockaddr_in*);
@@ -276,17 +203,18 @@ private:
 	void newLocal(const std::string& path);
 #endif
 
-	//Ptr _pImpl;
+	Ptr _pImpl;
 };
 
 
 //
 // inlines
 //
-/* inline SocketAddress::Ptr SocketAddress::pImpl() const
+inline SocketAddress::Ptr SocketAddress::pImpl() const
 {
 	if (_pImpl) return _pImpl;
-	throw Poco::NullPointerException("Pointer to SocketAddress implementation is NULL.");
+	//throw Poco::NullPointerException("Pointer to SocketAddress implementation is NULL.");
+	return _pImpl;
 }
 
 
@@ -309,18 +237,18 @@ inline void SocketAddress::newIPv4(const IPAddress& hostAddress, Poco::UInt16 po
 	if (hostAddress.family() == Poco::Net::AddressFamily::IPv4) {
 		std::cout << "IPAddress is IPv4." << std::endl;
 	}
-
+	
 	_pImpl = new Poco::Net::Impl::IPv4SocketAddressImpl(hostAddress.addr(), htons(portNumber));
-
+	
 	// debug
 	std::cout << "After constructor Port: " << _pImpl->port() << std::endl;
 	std::cout << "Socket address: ";
 	std::cout << std::ios::hex;
-	for (int32_t i = 0; i < 16; ++i) {
-		std::cout << (uint16_t) (_pImpl->addr()->sa_data)[i] << " ";
-	}
-
-	std::cout << std::ios::dec << std::endl;
+    for (int32_t i = 0; i < 16; ++i) { 
+        std::cout << (uint16_t) (_pImpl->addr()->sa_data)[i] << " ";
+    }
+    
+    std::cout << std::ios::dec << std::endl;
 }
 
 
@@ -349,7 +277,7 @@ inline void SocketAddress::newLocal(const std::string& path)
 {
 	_pImpl = new Poco::Net::Impl::LocalSocketAddressImpl(path.c_str(), path.size());
 }
-#endif // POCO_OS_FAMILY_UNIX */
+#endif // POCO_OS_FAMILY_UNIX
 
 
 inline 	bool SocketAddress::operator == (const SocketAddress& socketAddress) const
