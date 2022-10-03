@@ -61,7 +61,7 @@ StreamSocket& StreamSocket::operator = (const Socket& socket)
 	}
 	else {
 		//throw InvalidArgumentException("Cannot assign incompatible socket");
-		return 0;
+		return *this;
 	}
 	
 	return *this;

@@ -24,7 +24,7 @@
 
 using Poco::Environment;
 using Poco::NumberFormatter;
-using Poco::IOException;
+//using Poco::IOException;
 
 
 namespace Poco {
@@ -150,7 +150,7 @@ HostEntry DNS::hostByAddress(const IPAddress& address, unsigned
 		return HostEntry(he);
 	}
 #endif
-	int err = lastError();
+	//int err = lastError();
 	//error(err, address.toString()); // will throw an appropriate exception
 	//throw NetException(); // to silence compiler
 	return HostEntry();

@@ -20,7 +20,7 @@
 //using Poco::RefCountedObject;
 using Poco::NumberParser;
 using Poco::UInt16;
-using Poco::InvalidArgumentException;
+//using Poco::InvalidArgumentException;
 //using Poco::Net::Impl::SocketAddressImpl;
 //using Poco::Net::Impl::IPv4SocketAddressImpl;
 #ifdef POCO_HAVE_IPv6
@@ -352,7 +352,7 @@ bool SocketAddress::init(const std::string& hostAddress, Poco::UInt16 portNumber
 bool SocketAddress::init(Family fam, const std::string& hostAddress, Poco::UInt16 portNumber) {
 	IPAddress ip;
 	if (IPAddress::tryParse(hostAddress, ip)) {
-		if (ip.family() != fam) throw AddressFamilyMismatchException(hostAddress);
+		if (ip.family() != fam) { return false; } //throw AddressFamilyMismatchException(hostAddress);
 		init(ip, portNumber);
 	}
 	else {

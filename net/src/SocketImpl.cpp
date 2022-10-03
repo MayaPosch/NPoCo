@@ -131,7 +131,7 @@ int SocketImpl::connect(const SocketAddress& address) {
 	
 	while (rc != 0 && lastError() == POCO_EINTR);
 	if (rc != 0) {
-		int err = lastError();
+		//int err = lastError();
 		//error(err, address.toString());
 		return -1;
 	}
@@ -965,7 +965,7 @@ Poco::Timespan SocketImpl::getReceiveTimeout()
 
 SocketAddress SocketImpl::address()
 {
-	if (_sockfd == POCO_INVALID_SOCKET) throw InvalidSocketException();
+	if (_sockfd == POCO_INVALID_SOCKET) { return SocketAddress(); } //throw InvalidSocketException();
 
 	sockaddr_storage buffer;
 	struct sockaddr* pSA = reinterpret_cast<struct sockaddr*>(&buffer);
@@ -975,7 +975,7 @@ SocketAddress SocketImpl::address()
 		return SocketAddress(pSA, saLen);
 	else {
 		//error();
-		return false;
+		return SocketAddress();
 	}
 	
 	return SocketAddress();
@@ -995,7 +995,7 @@ SocketAddress SocketImpl::peerAddress() {
 		return SocketAddress(pSA, saLen);
 	else {
 		//error();
-		return false;
+		return SocketAddress();
 	}
 	
 	return SocketAddress();
@@ -1182,6 +1182,7 @@ bool SocketImpl::setReusePort(bool flag) {
 		// is defined.
 	}*/
 #endif
+	return false;
 }
 
 

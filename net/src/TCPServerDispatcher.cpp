@@ -140,8 +140,8 @@ void TCPServerDispatcher::enqueue(const StreamSocket& socket)
 				// Small chance of leaking if threadpool is stopped before this
 				// work runs, but better than a dangling pointer and crash!
 				++_rc;
-			}
-			/* catch (Poco::Exception&)
+			/*}
+			catch (Poco::Exception&)
 			{
 				// no problem here, connection is already queued
 				// and a new thread might be available later.

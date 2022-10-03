@@ -119,7 +119,7 @@ IPAddress::IPAddress(const std::string& addr)
 	}
 #endif
 
-	throw InvalidAddressException(addr);
+	//throw InvalidAddressException(addr);
 }
 
 

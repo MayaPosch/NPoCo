@@ -14,12 +14,14 @@ SHARED_FLAGS := -fPIC -shared -Wl,-soname,$(OUTPUT).so.$(VERSION)
 
 OBJROOT := ../build/$(TARGET)/npoco/obj
 INCLOUT := $(TOP)/build/$(TARGET)/npoco/include/npoco/net
-HEADERS := $(wildcard src/*.h) \
-			$(wildcard src/platforms/*.h)
-HTARGET := $(addprefix $(INCLOUT)/,$(notdir $(wildcard src/*.h))) \
-			$(addprefix $(INCLOUT)/,$(notdir $(wildcard src/platforms/*.h)))
+# HEADERS := $(wildcard src/*.h) \
+			# $(wildcard src/platforms/*.h)
+# HTARGET := $(addprefix $(INCLOUT)/,$(notdir $(wildcard src/*.h))) \
+			# $(addprefix $(INCLOUT)/,$(notdir $(wildcard src/platforms/*.h)))
+HEADERS := $(notdir $(wildcard src/*.h)) \
+			$(addprefix platforms/,$(notdir $(wildcard src/platforms/*.h)))
 LD_FLAGS := $(STD_LDFLAGS)
-LIBS := $(STD_LIBS) -lz
+LIBS := $(STD_LIBS) -lz -L$(TOP)/build/$(TARGET)/npoco/lib -lNPocoCore
 
 
 CSOURCES := $(wildcard src/*.c)
@@ -32,7 +34,7 @@ SHARED_OBJECTS := $(addprefix $(OBJROOT)/net/shared/,$(notdir $(SOURCES:.cpp=.o)
 
 
 all: makedir objfile $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).a \
-		$(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).so.$(VERSION) $(HTARGET)
+		$(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).so.$(VERSION) $(HEADERS)
 		
 objfile:
 	$(file >$(TOP)/build/$(TARGET)/npoco/obj/net/shared/s_objects.psr, $(SHARED_OBJECTS) $(SHARED_COBJECTS))
@@ -55,8 +57,8 @@ makedir:
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/lib
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/include/npoco/net
 	
-$(INCLOUT)/%.h: $(HEADERS)
-	$(CP) $< $@
+%.h:
+	$(CP) src/@< $(INCLOUT)/net/$@
 
 $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).a: $(OBJECTS) $(COBJECTS)
 	-rm -f $@

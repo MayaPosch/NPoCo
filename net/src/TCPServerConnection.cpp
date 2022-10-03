@@ -8,8 +8,8 @@
 //#include "Poco/ErrorHandler.h"
 
 
-using Poco::Exception;
-using Poco::ErrorHandler;
+//using Poco::Exception;
+//using Poco::ErrorHandler;
 
 
 namespace Poco {

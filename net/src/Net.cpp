@@ -13,7 +13,7 @@
 namespace Poco {
 namespace Net {
 
-void Net_API initializeNetwork() {
+bool Net_API initializeNetwork() {
 #if defined(POCO_OS_FAMILY_WINDOWS)
 	WORD    version = MAKEWORD(2, 2);
 	WSADATA data;

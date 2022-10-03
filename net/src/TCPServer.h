@@ -11,11 +11,11 @@
 #include "ServerSocket.h"
 #include "TCPServerConnectionFactory.h"
 #include "TCPServerParams.h"
-#include "RefCountedObject.h"
-#include "AutoPtr.h"
-#include "Runnable.h"
-#include "Thread.h"
-#include "ThreadPool.h"
+#include "npoco/RefCountedObject.h"
+#include "npoco/AutoPtr.h"
+#include "npoco/Runnable.h"
+#include "npoco/Thread.h"
+#include "npoco/ThreadPool.h"
 
 
 namespace Poco {

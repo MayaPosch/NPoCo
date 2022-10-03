@@ -350,7 +350,7 @@ public:
 		/// Returns the value of the socket option
 		/// specified by level and option.
 
-	virtual void getRawOption(int level, int option, void* value, poco_socklen_t& length);
+	virtual bool getRawOption(int level, int option, void* value, poco_socklen_t& length);
 		/// Returns the value of the socket option
 		/// specified by level and option.
 
@@ -421,10 +421,10 @@ public:
 		/// Returns the socket descriptor for the
 		/// underlying native socket.
 
-	void ioctl(poco_ioctl_request_t request, int& arg);
+	int ioctl(poco_ioctl_request_t request, int& arg);
 		/// A wrapper for the ioctl system call.
 
-	void ioctl(poco_ioctl_request_t request, void* arg);
+	int ioctl(poco_ioctl_request_t request, void* arg);
 		/// A wrapper for the ioctl system call.
 
 #if defined(POCO_OS_FAMILY_UNIX)
