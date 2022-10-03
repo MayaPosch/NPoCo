@@ -360,7 +360,7 @@ bool FileImpl::copyToImpl(const std::string& path, int options) const {
 	poco_assert (!_path.empty());
 
 	int sd = open(_path.c_str(), O_RDONLY);
-	if (sd == -1) handleLastErrorImpl(_path);
+	if (sd == -1) { return false; } //handleLastErrorImpl(_path);
 
 	struct stat st;
 	if (fstat(sd, &st) != 0) {
