@@ -58,7 +58,7 @@ makedir:
 	$(MKDIR) $(TOP)/build/$(TARGET)/npoco/include/npoco/net
 	
 %.h:
-	$(CP) src/@< $(INCLOUT)/net/$@
+	$(CP) src/$@ $(INCLOUT)/$@
 
 $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).a: $(OBJECTS) $(COBJECTS)
 	-rm -f $@
