@@ -19,20 +19,17 @@ RefCountedObject::~RefCountedObject()
 }
 
 
-//
-// inlines
-//
-inline int RefCountedObject::referenceCount() const {
+int RefCountedObject::referenceCount() const {
 	return _counter.value();
 }
 
 
-inline void RefCountedObject::duplicate() const {
+void RefCountedObject::duplicate() const {
 	++_counter;
 }
 
 
-inline void RefCountedObject::release() const noexcept {
+void RefCountedObject::release() const {
 	//try 	{
 		if (--_counter == 0) delete this;
 	/*}

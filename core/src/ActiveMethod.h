@@ -7,11 +7,11 @@
 #define Core_ActiveMethod_INCLUDED
 
 
-#include "../Core.h"
-#include "../ActiveResult.h"
-#include "../ActiveRunnable.h"
-#include "../ActiveStarter.h"
-#include "../AutoPtr.h"
+#include "Core.h"
+#include "ActiveResult.h"
+#include "ActiveRunnable.h"
+#include "ActiveStarter.h"
+#include "AutoPtr.h"
 
 
 namespace Poco {

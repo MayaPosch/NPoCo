@@ -113,8 +113,9 @@ public:
 	{
 		Mutex::ScopedLock lock(_mutex);
 
-		if (preserveContent && (newSize < _used))
-			throw InvalidAccessException("Can not resize FIFO without data loss.");
+		// TODO: Handle error.
+		if (preserveContent && (newSize < _used)) { return; }
+			//throw InvalidAccessException("Can not resize FIFO without data loss.");
 		
 		std::size_t usedBefore = _used;
 		_buffer.resize(newSize, preserveContent);
@@ -306,11 +307,13 @@ public:
 
 		Mutex::ScopedLock lock(_mutex);
 		
-		if (length > available())
-			throw Poco::InvalidAccessException("Cannot extend buffer.");
+		// TODO: Handle error.
+		if (length > available()) { return; }
+			//throw Poco::InvalidAccessException("Cannot extend buffer.");
 		
-		if (!isWritable())
-			throw Poco::InvalidAccessException("Buffer not writable.");
+		// TODO: Handle error.
+		if (!isWritable()) { return; }
+			//throw Poco::InvalidAccessException("Buffer not writable.");
 
 		std::memcpy(begin() + _used, ptr, length * sizeof(T));
 		std::size_t usedBefore = _used;
@@ -325,11 +328,13 @@ public:
 	{
 		Mutex::ScopedLock lock(_mutex);
 
-		if (length > available())
-			throw Poco::InvalidAccessException("Cannot extend buffer.");
+		// TODO: Handle error.
+		if (length > available()) { return; }
+			//throw Poco::InvalidAccessException("Cannot extend buffer.");
 		
-		if (!isWritable())
-			throw Poco::InvalidAccessException("Buffer not writable.");
+		// TODO: Handle error.
+		if (!isWritable()) { return; }
+			//throw Poco::InvalidAccessException("Buffer not writable.");
 
 		if (_buffer.size() - (_begin + _used) < length)
 		{
@@ -370,8 +375,8 @@ public:
 		/// the last valid (used) buffer position.
 	{
 		Mutex::ScopedLock lock(_mutex);
-		if (index >= _used)
-			throw InvalidAccessException(format("Index out of bounds: %z (max index allowed: %z)", index, _used - 1));
+		if (index >= _used) { return _buffer[0]; } // TODO: Handle error.
+			//throw InvalidAccessException(format("Index out of bounds: %z (max index allowed: %z)", index, _used - 1));
 
 		return _buffer[_begin + index];
 	}
@@ -382,8 +387,8 @@ public:
 		/// the last valid (used) buffer position.
 	{
 		Mutex::ScopedLock lock(_mutex);
-		if (index >= _used)
-			throw InvalidAccessException(format("Index out of bounds: %z (max index allowed: %z)", index, _used - 1));
+		if (index >= _used) { return _buffer[0]; } // TODO: Handle error.
+			//throw InvalidAccessException(format("Index out of bounds: %z (max index allowed: %z)", index, _used - 1));
 
 		return _buffer[_begin + index];
 	}

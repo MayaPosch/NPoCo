@@ -250,7 +250,7 @@ public:
 		else {
 			//throw NullPointerException();
 			// Todo: Handle Nullptr.
-			return 0;
+			return *_ptr;
 		}
 	}
 

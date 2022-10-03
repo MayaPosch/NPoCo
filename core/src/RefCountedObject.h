@@ -27,7 +27,7 @@ public:
 	void duplicate() const;
 		/// Increments the object's reference count.
 		
-	void release() const noexcept;
+	void release() const;
 		/// Decrements the object's reference count
 		/// and deletes the object if the count
 		/// reaches zero.
@@ -45,6 +45,20 @@ private:
 
 	mutable AtomicCounter _counter;
 };
+
+
+//
+// inlines
+//
+/*inline int RefCountedObject::referenceCount() const {
+	return _counter.value();
+}*/
+
+
+/*inline void RefCountedObject::duplicate() const {
+	++_counter;
+}*/
+
 
 } // namespace Poco
 

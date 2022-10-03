@@ -29,8 +29,8 @@ class ActiveResultHolder: public RefCountedObject
 public:
 	ActiveResultHolder():
 		_pData(0),
-		_pExc(0),
 		_event(Event::EVENT_MANUALRESET)
+		//_pExc(0),
 		/// Creates an ActiveResultHolder.
 	{
 	}
@@ -183,9 +183,9 @@ public:
 		/// of the exception is returned. An empty string is returned if the
 		/// active method completed successfully.
 	{
-		if (_pExc)
+		/* if (_pExc)
 			return _pExc->message();
-		else
+		else */
 			return std::string();
 	}
 	
@@ -206,18 +206,18 @@ public:
 	void error(const std::string& msg)
 		/// Sets the exception.
 	{
-		delete _pExc;
-		_pExc = new UnhandledException(msg);
+		//delete _pExc;
+		//_pExc = new UnhandledException(msg);
 	}
 
 protected:
 	~ActiveResultHolder()
 	{
-		delete _pExc;
+		//delete _pExc;
 	}
 
 private:
-	Exception*  _pExc;
+	//Exception*  _pExc;
 	Event       _event;
 };
 
@@ -320,12 +320,12 @@ public:
 		return _pHolder->error();
 	}
 
-	Exception* exception() const
+	/* Exception* exception() const
 		/// If the active method threw an exception, a clone of the exception
 		/// object is returned, otherwise null.
 	{
 		return _pHolder->exception();
-	}
+	} */
 
 	void notify()
 		/// Notifies the invoking thread that the result became available.
@@ -467,11 +467,11 @@ public:
 		//_pHolder->error(msg);
 	}
 
-	void error(const Exception& exc)
+	/* void error(const Exception& exc)
 		/// Sets the failed flag and the exception message.
 	{
 		//_pHolder->error(exc);
-	}
+	} */
 	
 private:
 	ActiveResult();
