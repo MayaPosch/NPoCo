@@ -20,6 +20,8 @@
 #endif
 #elif defined(POCO_VXWORKS)
 #include "platforms/Thread_VX.h"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Thread_FreeRTOS.h"
 #else
 #include "platforms/Thread_POSIX.h"
 #endif

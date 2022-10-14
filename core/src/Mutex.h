@@ -30,6 +30,8 @@
 #endif
 #elif defined(POCO_VXWORKS)
 #include "platforms/Mutex_VX.h"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Mutex_FreeRTOS.h"
 #else
 #include "platforms/Mutex_POSIX.h"
 #endif

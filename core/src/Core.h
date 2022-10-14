@@ -81,6 +81,8 @@
 	#include "platforms/Platform_VX.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 	#include "platforms/Platform_POSIX.h"
+#elif defined(__FREERTOS__)
+	#include "platforms/Platform_FreeRTOS.h"
 #endif
 
 

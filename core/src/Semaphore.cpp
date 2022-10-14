@@ -10,6 +10,8 @@
 #include "platforms/Semaphore_WIN32.cpp"
 #elif defined(POCO_VXWORKS)
 #include "platforms/Semaphore_VX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Semaphore_FreeRTOS.cpp"
 #else
 #include "platforms/Semaphore_POSIX.cpp"
 #endif
