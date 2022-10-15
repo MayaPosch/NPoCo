@@ -100,16 +100,16 @@ public:
 	{
 	}
 
-	SharedPtr(C* ptr)
-	try:
+	SharedPtr(C* ptr):
+	//try:
 		_pCounter(ptr ? new RC : nullptr),
 		_ptr(ptr)
 	{
 	}
-	catch (...)
+	/*catch (...)
 	{
 		RP::release(ptr);
-	}
+	} */
 
 	template <class Other, class OtherRP>
 	SharedPtr(const SharedPtr<Other, RC, OtherRP>& ptr):

@@ -15,6 +15,8 @@
 
 #if defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/Path_UNIX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Path_FreeRTOS.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
 #include "platforms/Path_WINCE.cpp"
@@ -260,33 +262,33 @@ std::string Path::toString(Style style) const
 
 bool Path::tryParse(const std::string& path)
 {
-	try
-	{
+	/* try
+	{ */
 		Path p;
 		p.parse(path);
 		assign(p);
 		return true;
-	}
+	/* }
 	catch (...)
 	{
 		return false;
-	}
+	} */
 }
 
 
 bool Path::tryParse(const std::string& path, Style style)
 {
-	try
-	{
+	/* try
+	{ */
 		Path p;
 		p.parse(path, style);
 		assign(p);
 		return true;
-	}
+	/* }
 	catch (...)
 	{
 		return false;
-	}
+	} */
 }
 
 
@@ -1080,6 +1082,7 @@ std::string Path::buildVMS() const
 
 std::string Path::transcode(const std::string& path)
 {
+#ifndef POCO_OS_FAMILY_FREERTOS
 #if defined(_WIN32)
 	std::wstring uniPath;
 	UnicodeConverter::toUTF16(path, uniPath);
@@ -1093,6 +1096,7 @@ std::string Path::transcode(const std::string& path)
 			return std::string(buffer.begin(), buffer.size());
 		}
 	}
+#endif
 #endif
 	return path;
 }

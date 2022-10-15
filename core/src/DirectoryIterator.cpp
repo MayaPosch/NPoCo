@@ -10,6 +10,8 @@
 #include "platforms/DirectoryIterator_WIN32U.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/DirectoryIterator_UNIX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/DirectoryIterator_FreeRTOS.cpp"
 #endif
 
 

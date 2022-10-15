@@ -13,6 +13,8 @@
 #include "platforms/Environment_VX.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/Environment_UNIX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Environment_FreeRTOS.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
 #include "platforms/Environment_WINCE.cpp"

@@ -12,6 +12,8 @@
 #include "platforms/NamedEvent_Android.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/NamedEvent_UNIX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/NamedEvent_FreeRTOS.cpp"
 #endif
 
 

@@ -7,7 +7,9 @@
 #include <ctime>
 
 
-#if defined(POCO_OS_FAMILY_WINDOWS)
+#if defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Timezone_FreeRTOS.cpp"
+#elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
 #include "platforms/Timezone_WINCE.cpp"
 #else

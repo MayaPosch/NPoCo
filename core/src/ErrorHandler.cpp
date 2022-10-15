@@ -50,27 +50,27 @@ void ErrorHandler::exception()
 	
 void ErrorHandler::handle(const std::exception& exc)
 {
-	FastMutex::ScopedLock lock(_mutex);
+	/* FastMutex::ScopedLock lock(_mutex);
 	try
 	{
 		_pHandler->exception(exc);
 	}
 	catch (...)
 	{
-	}
+	} */
 }
 
 
 void ErrorHandler::handle()
 {
-	FastMutex::ScopedLock lock(_mutex);
+	/* FastMutex::ScopedLock lock(_mutex);
 	try
 	{
 		_pHandler->exception();
 	}
 	catch (...)
 	{
-	}
+	} */
 }
 
 

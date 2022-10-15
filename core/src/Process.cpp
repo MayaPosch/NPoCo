@@ -48,6 +48,8 @@ namespace
 #include "platforms/Process_VX.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/Process_UNIX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Process_FreeRTOS.cpp"
 #endif
 
 

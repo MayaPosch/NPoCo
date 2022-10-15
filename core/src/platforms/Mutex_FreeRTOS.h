@@ -1,5 +1,5 @@
 /*
-	Mutex_FreeRTOS.h - Definition of the MutexImpl and FastMutexImpl classes for POSIX Threads.
+	Mutex_FreeRTOS.h - Definition of the MutexImpl and FastMutexImpl classes for FreeRTOS Threads.
 */
 
 

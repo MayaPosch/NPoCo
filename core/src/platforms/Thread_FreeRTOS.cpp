@@ -251,7 +251,8 @@ ThreadImpl* ThreadImpl::currentImpl() {
 
 ThreadImpl::TIDImpl ThreadImpl::currentTidImpl() {
 	//return pthread_self();
-	return _pData->thread->get_id();
+	//return _pData->thread->get_id();
+	return std::this_thread::get_id();
 }
 
 

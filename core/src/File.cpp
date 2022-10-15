@@ -1,15 +1,7 @@
 //
-// File.cpp
-//
-// Library: Foundation
-// Package: Filesystem
-// Module:  File
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+/*
+	File.cpp
+*/
 
 
 #include "File.h"
@@ -27,6 +19,8 @@
 #include "platforms/File_VX.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/File_UNIX.cpp"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/File_FreeRTOS.cpp"
 #endif
 #include "Thread.h"
 

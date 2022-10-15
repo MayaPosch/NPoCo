@@ -10,7 +10,9 @@
 #include <sstream>
 
 
-#if defined(POCO_OS_FAMILY_WINDOWS)
+#if defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Thread_FreeRTOS.cpp"
+#elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
 #include "platforms/Thread_WINCE.cpp"
 #else

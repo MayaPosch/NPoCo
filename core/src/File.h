@@ -22,6 +22,8 @@
 #include "platforms/File_VX.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/File_UNIX.h"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/File_FreeRTOS.h"
 #endif
 
 

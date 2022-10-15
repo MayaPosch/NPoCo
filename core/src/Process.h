@@ -20,6 +20,8 @@
 #include "platforms/Process_VX.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "platforms/Process_UNIX.h"
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/Process_FreeRTOS.h"
 #endif
 
 

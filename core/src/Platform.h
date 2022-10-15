@@ -130,6 +130,9 @@
 #if defined(__ALPHA) || defined(__alpha) || defined(__alpha__) || defined(_M_ALPHA)
 	#define POCO_ARCH POCO_ARCH_ALPHA
 	#define POCO_ARCH_LITTLE_ENDIAN 1
+#elif defined (__XTENSA__)
+	#define POCO_ARCH POCO_ARCH_XTENSA
+	#define POCO_ARCH_LITTLE_ENDIAN 1
 #elif defined(i386) || defined(__i386) || defined(__i386__) || defined(_M_IX86) || defined(EMSCRIPTEN)
 	#define POCO_ARCH POCO_ARCH_IA32
 	#define POCO_ARCH_LITTLE_ENDIAN 1
@@ -217,9 +220,6 @@
 	#define POCO_ARCH_BIG_ENDIAN 1
 #elif defined(__riscv) && (__riscv_xlen == 64)
 	#define POCO_ARCH POCO_ARCH_RISCV64
-	#define POCO_ARCH_LITTLE_ENDIAN 1
-#elif defined (__XTENSA__)
-	#define POCO_ARCH POCO_ARCH_XTENSA
 	#define POCO_ARCH_LITTLE_ENDIAN 1
 #endif
 

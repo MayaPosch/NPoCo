@@ -19,14 +19,14 @@ NotificationQueue::NotificationQueue()
 
 NotificationQueue::~NotificationQueue()
 {
-	try
-	{
+	/* try
+	{ */
 		clear();
-	}
+	/* }
 	catch (...)
 	{
 		poco_unexpected();
-	}
+	} */
 }
 
 

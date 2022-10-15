@@ -170,7 +170,7 @@ inline int ThreadImpl::getStackSizeImpl() const {
 
 
 inline ThreadImpl::TIDImpl ThreadImpl::tidImpl() const {
-	return _pData->thread;
+	return _pData->thread->get_id();
 }
 
 
