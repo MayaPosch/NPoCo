@@ -216,6 +216,76 @@
 	#define POCO_TRY_AGAIN       TRY_AGAIN
 	#define POCO_NO_RECOVERY     NO_RECOVERY
 	#define POCO_NO_DATA         NO_DATA
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+	// FreeRTOS (LwIP) includes.
+	#include "lwip/err.h"
+	#include "lwip/sockets.h"
+	#include "lwip/sys.h"
+	#include <lwip/netdb.h>
+	
+	// Defines
+	#define POCO_INVALID_SOCKET  -1
+	#define poco_socket_t        int
+	#define poco_socklen_t       socklen_t
+	#define poco_fcntl_request_t int
+	/* #if defined(POCO_OS_FAMILY_BSD)
+		#define poco_ioctl_request_t unsigned long
+	#else
+		#define poco_ioctl_request_t int
+	#endif */
+	#define poco_closesocket(s)  ::close(s)
+	#define POCO_EINTR           EINTR
+	#define POCO_EACCES          EACCES
+	#define POCO_EFAULT          EFAULT
+	#define POCO_EINVAL          EINVAL
+	#define POCO_EMFILE          EMFILE
+	#define POCO_EAGAIN          EAGAIN
+	#define POCO_EWOULDBLOCK     EWOULDBLOCK
+	#define POCO_EINPROGRESS     EINPROGRESS
+	#define POCO_EALREADY        EALREADY
+	#define POCO_ENOTSOCK        ENOTSOCK
+	#define POCO_EDESTADDRREQ    EDESTADDRREQ
+	#define POCO_EMSGSIZE        EMSGSIZE
+	#define POCO_EPROTOTYPE      EPROTOTYPE
+	#define POCO_ENOPROTOOPT     ENOPROTOOPT
+	#define POCO_EPROTONOSUPPORT EPROTONOSUPPORT
+	#if defined(ESOCKTNOSUPPORT)
+		#define POCO_ESOCKTNOSUPPORT ESOCKTNOSUPPORT
+	#else
+		#define POCO_ESOCKTNOSUPPORT -1
+	#endif
+	#define POCO_ENOTSUP         ENOTSUP
+	#define POCO_EPFNOSUPPORT    EPFNOSUPPORT
+	#define POCO_EAFNOSUPPORT    EAFNOSUPPORT
+	#define POCO_EADDRINUSE      EADDRINUSE
+	#define POCO_EADDRNOTAVAIL   EADDRNOTAVAIL
+	#define POCO_ENETDOWN        ENETDOWN
+	#define POCO_ENETUNREACH     ENETUNREACH
+	#define POCO_ENETRESET       ENETRESET
+	#define POCO_ECONNABORTED    ECONNABORTED
+	#define POCO_ECONNRESET      ECONNRESET
+	#define POCO_ENOBUFS         ENOBUFS
+	#define POCO_EISCONN         EISCONN
+	#define POCO_ENOTCONN        ENOTCONN
+	#if defined(ESHUTDOWN)
+		#define POCO_ESHUTDOWN   ESHUTDOWN
+	#else
+		#define POCO_ESHUTDOWN   -2
+	#endif
+	#define POCO_ETIMEDOUT       ETIMEDOUT
+	#define POCO_ECONNREFUSED    ECONNREFUSED
+	#if defined(EHOSTDOWN)
+		#define POCO_EHOSTDOWN   EHOSTDOWN
+	#else
+		#define POCO_EHOSTDOWN   -3
+	#endif
+	#define POCO_EHOSTUNREACH    EHOSTUNREACH
+	#define POCO_ESYSNOTREADY    -4
+	#define POCO_ENOTINIT        -5
+	#define POCO_HOST_NOT_FOUND  HOST_NOT_FOUND
+	#define POCO_TRY_AGAIN       TRY_AGAIN
+	#define POCO_NO_RECOVERY     NO_RECOVERY
+	#define POCO_NO_DATA         NO_DATA
 #endif
 
 
@@ -348,6 +418,8 @@ namespace Net {
 #if defined(POCO_OS_FAMILY_WINDOWS)
 	typedef WSABUF SocketBuf;
 #elif defined(POCO_OS_FAMILY_UNIX) // TODO: may need more refinement
+	typedef iovec SocketBuf;
+#elif defined(POCO_OS_FAMILY_FREERTOS) // TODO: may need more refinement
 	typedef iovec SocketBuf;
 #endif
 
