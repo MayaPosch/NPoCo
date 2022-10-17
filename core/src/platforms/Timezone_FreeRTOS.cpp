@@ -17,7 +17,7 @@ class TZInfo
 public:
 	TZInfo()
 	{
-		tzset();
+		//tzset();
 	}
 	
 	int timeZone()
@@ -34,21 +34,24 @@ public:
 		tzset();
 		return -_timezone;
 	#else */
-		tzset();
-		return -timezone;
+		//tzset();
+		//return -timezone;
 	//#endif
+		return 0;
 	}
 	
 	const char* name(bool dst)
 	{
 		Poco::FastMutex::ScopedLock lock(_mutex);
 
-		tzset();		
-		return tzname[dst ? 1 : 0];
+		//tzset();		
+		//return tzname[dst ? 1 : 0];
+		return n;
 	}
 		
 private:
 	Poco::FastMutex _mutex;
+	const char n[3] = "hi";
 };
 
 
@@ -58,6 +61,7 @@ static TZInfo tzInfo;
 int Timezone::utcOffset()
 {
 	return tzInfo.timeZone();
+	return 0;
 }
 
 	

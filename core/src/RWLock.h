@@ -10,7 +10,9 @@
 #include "Core.h"
 
 
-#if defined(POCO_OS_FAMILY_WINDOWS)
+#if defined(POCO_OS_FAMILY_FREERTOS)
+#include "platforms/RWLock_FreeRTOS.h"
+#elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
 #include "platforms/RWLock_WINCE.h"
 #else
