@@ -218,10 +218,21 @@
 	#define POCO_NO_DATA         NO_DATA
 #elif defined(POCO_OS_FAMILY_FREERTOS)
 	// FreeRTOS (LwIP) includes.
+	#define LWIP_COMPAT_SOCKETS	1
+	#define ESP_PLATFORM 1
+	#define NI_NOFQDN      0x01 // Only return nodename portion for local hosts */
+    #define NI_NUMERICHOST 0x02 // Return numeric form of the host's address */
+    #define NI_NAMEREQD    0x04 /// Error if the host's name not in DNS */
+    //#define NI_NUMERICSERV 0x08 // Return numeric form of the service (port #) */
+    //#define NI_DGRAM       0x10 // Service is a datagram service */
+
 	#include "lwip/err.h"
 	#include "lwip/sockets.h"
 	#include "lwip/sys.h"
-	#include <lwip/netdb.h>
+	#include <sys/socket.h>
+	#include <netdb.h>
+	#include <net/if.h>
+	#include <arpa/inet.h>
 	
 	// Defines
 	#define POCO_INVALID_SOCKET  -1

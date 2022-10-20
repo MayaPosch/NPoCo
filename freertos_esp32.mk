@@ -25,9 +25,29 @@ PLATFORM_FLAGS = $(SYSROOT) -D__FREERTOS__ -D__XTENSA__ -DPOCO_NO_FPENVIRONMENT 
 #STD_FLAGS = $(PLATFORM_FLAGS) -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -fdata-sections -fPIE  -fno-strict-aliasing
 STD_FLAGS = $(PLATFORM_FLAGS) -Og -g3 -Wall -ffunction-sections -fdata-sections -fpic -funwind-tables -fstack-protector -fno-strict-aliasing -fno-omit-frame-pointer
 STD_CFLAGS = $(STD_FLAGS)
-STD_CXXFLAGS = -std=c++14 $(STD_FLAGS) 
+# Use gnu++14 rather than c++14 because we need the VA_ARGS GNU extensions in FreeRTOS (portmacro.h).
+STD_CXXFLAGS = -std=gnu++14 $(STD_FLAGS) 
 #-fno-rtti -fno-exception
 STD_LDFLAGS = 
-STD_INCLUDE = -I.
+STD_INCLUDE = -I. -I$(ESP_TOOLCHAIN)/../../framework-espidf/components/lwip/lwip/src/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/lwip/port/esp32/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/newlib/platform_include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/esp_system/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/esp_common/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/freertos/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/freertos/include/esp_additions/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/freertos/include/esp_additions/freertos/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/freertos/port/xtensa/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/xtensa/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/xtensa/esp32/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/esp_rom/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/soc/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/soc/esp32/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/esp_hw_support/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/hal/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/hal/esp32/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/esp_timer/include/ \
+				-I$(ESP_TOOLCHAIN)/../../framework-espidf/components/heap/include/ \
+				-Isrc/platforms/esp32/
 STD_LIBDIRS = $(STD_LDFLAGS)
 #STD_LIBS = -lssl -lcrypto
