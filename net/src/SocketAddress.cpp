@@ -420,7 +420,10 @@ Poco::UInt16 SocketAddress::resolveService(const std::string& service)
 	else
 	{
 #if defined(POCO_VXWORKS)
-		throw ServiceNotFoundException(service);
+		//throw ServiceNotFoundException(service);
+		return 0; // TODO: Handle error.
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+		return 0;
 #else
 		struct servent* se = getservbyname(service.c_str(), NULL);
 		if (se)

@@ -427,6 +427,19 @@ IPv6AddressImpl::IPv6AddressImpl(unsigned prefix):
 	{
 		_addr.s6_addr16[i++] = 0;
 	}
+#elif defined POCO_OS_FAMILY_FREERTOS
+	for (; prefix >= 32; ++i, prefix -= 32) 
+	{
+		_addr.un.u32_addr[i] = 0xffffffff;
+	}
+	if (prefix > 0)
+	{
+		_addr.un.u32_addr[i++] = ByteOrder::toNetwork(~(0xffffffffU >> prefix));
+	}
+	while (i < 4)
+	{
+		_addr.un.u32_addr[i++] = 0;
+	}
 #else
 	for (; prefix >= 32; ++i, prefix -= 32) 
 	{
@@ -544,6 +557,14 @@ unsigned IPv6AddressImpl::prefixLength() const
 	for (int i = 3; i >= 0; --i)
 	{
 		unsigned addr = ntohl(_addr.s6_addr32[i]);
+		if ((bits = maskBits(addr, 32))) return (bitPos - (32 - bits));
+		bitPos -= 32;
+	}
+	return 0;
+#elif defined(POCO_OS_FAMILY_FREERTOS)
+	for (int i = 3; i >= 0; --i)
+	{
+		unsigned addr = ntohl(_addr.un.u32_addr[i]);
 		if ((bits = maskBits(addr, 32))) return (bitPos - (32 - bits));
 		bitPos -= 32;
 	}
@@ -744,6 +765,11 @@ IPv6AddressImpl IPv6AddressImpl::operator & (const IPv6AddressImpl& addr) const
 	result._addr.s6_addr16[5] &= addr._addr.s6_addr16[5];
 	result._addr.s6_addr16[6] &= addr._addr.s6_addr16[6];
 	result._addr.s6_addr16[7] &= addr._addr.s6_addr16[7];
+#elif POCO_OS_FAMILY_FREERTOS
+	result._addr.un.u32_addr[0] &= addr._addr.un.u32_addr[0];
+	result._addr.un.u32_addr[1] &= addr._addr.un.u32_addr[1];
+	result._addr.un.u32_addr[2] &= addr._addr.un.u32_addr[2];
+	result._addr.un.u32_addr[3] &= addr._addr.un.u32_addr[3];
 #else
 	result._addr.s6_addr32[0] &= addr._addr.s6_addr32[0];
 	result._addr.s6_addr32[1] &= addr._addr.s6_addr32[1];
@@ -772,6 +798,11 @@ IPv6AddressImpl IPv6AddressImpl::operator | (const IPv6AddressImpl& addr) const
 	result._addr.s6_addr16[5] |= addr._addr.s6_addr16[5];
 	result._addr.s6_addr16[6] |= addr._addr.s6_addr16[6];
 	result._addr.s6_addr16[7] |= addr._addr.s6_addr16[7];
+#elif POCO_OS_FAMILY_FREERTOS
+	result._addr.un.u32_addr[0] |= addr._addr.un.u32_addr[0];
+	result._addr.un.u32_addr[1] |= addr._addr.un.u32_addr[1];
+	result._addr.un.u32_addr[2] |= addr._addr.un.u32_addr[2];
+	result._addr.un.u32_addr[3] |= addr._addr.un.u32_addr[3];
 #else
 	result._addr.s6_addr32[0] |= addr._addr.s6_addr32[0];
 	result._addr.s6_addr32[1] |= addr._addr.s6_addr32[1];
@@ -801,6 +832,11 @@ IPv6AddressImpl IPv6AddressImpl::operator ^ (const IPv6AddressImpl& addr) const
 	result._addr.s6_addr16[5] ^= addr._addr.s6_addr16[5];
 	result._addr.s6_addr16[6] ^= addr._addr.s6_addr16[6];
 	result._addr.s6_addr16[7] ^= addr._addr.s6_addr16[7];
+#elif POCO_OS_FAMILY_FREERTOS
+	result._addr.un.u32_addr[0] ^= addr._addr.un.u32_addr[0];
+	result._addr.un.u32_addr[1] ^= addr._addr.un.u32_addr[1];
+	result._addr.un.u32_addr[2] ^= addr._addr.un.u32_addr[2];
+	result._addr.un.u32_addr[3] ^= addr._addr.un.u32_addr[3];
 #else
 	result._addr.s6_addr32[0] ^= addr._addr.s6_addr32[0];
 	result._addr.s6_addr32[1] ^= addr._addr.s6_addr32[1];
@@ -823,6 +859,11 @@ IPv6AddressImpl IPv6AddressImpl::operator ~ () const
 	result._addr.s6_addr16[5] ^= 0xffff;
 	result._addr.s6_addr16[6] ^= 0xffff;
 	result._addr.s6_addr16[7] ^= 0xffff;
+#elif POCO_OS_FAMILY_FREERTOS
+	result._addr.un.u32_addr[0] ^= 0xffffffff;
+	result._addr.un.u32_addr[1] ^= 0xffffffff;
+	result._addr.un.u32_addr[2] ^= 0xffffffff;
+	result._addr.un.u32_addr[3] ^= 0xffffffff;
 #else
 	result._addr.s6_addr32[0] ^= 0xffffffff;
 	result._addr.s6_addr32[1] ^= 0xffffffff;

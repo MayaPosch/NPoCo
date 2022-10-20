@@ -226,12 +226,21 @@
     //#define NI_NUMERICSERV 0x08 // Return numeric form of the service (port #) */
     //#define NI_DGRAM       0x10 // Service is a datagram service */
 
-	#include "lwip/err.h"
+	/* #include "lwip/err.h"
 	#include "lwip/sockets.h"
-	#include "lwip/sys.h"
+	#include "lwip/sys.h" */
+	#include <unistd.h>
+	#include <errno.h>
+	#include <sys/types.h>
 	#include <sys/socket.h>
+	#include <sys/un.h>
+	#include <sys/uio.h>
+	#include <fcntl.h>
+	
+	//#include <sys/socket.h>
 	#include <netdb.h>
 	#include <net/if.h>
+	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	
 	// Defines
@@ -241,9 +250,9 @@
 	#define poco_fcntl_request_t int
 	/* #if defined(POCO_OS_FAMILY_BSD)
 		#define poco_ioctl_request_t unsigned long
-	#else
+	#else*/
 		#define poco_ioctl_request_t int
-	#endif */
+	//#endif
 	#define poco_closesocket(s)  ::close(s)
 	#define POCO_EINTR           EINTR
 	#define POCO_EACCES          EACCES
