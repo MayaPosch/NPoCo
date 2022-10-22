@@ -18,7 +18,8 @@ HEADERS := $(notdir $(wildcard src/*.h)) \
 			$(addprefix platforms/,$(notdir $(wildcard src/platforms/*.h))) \
 			$(addprefix Dynamic/,$(notdir $(wildcard src/Dynamic/*.h)))
 LD_FLAGS := $(STD_LDFLAGS)
-LIBS := $(STD_LIBS) -lz
+LIBS := $(STD_LIBS) 
+#-lz
 
 
 CSOURCES := $(wildcard src/*.c)
@@ -71,4 +72,4 @@ $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).so.$(VERSION): $(SHARED_OBJECTS) $(SH
 	$(STRIP) -S --strip-unneeded $@
 	
 clean:
-	$(RM) $(OBJECTS)
+	$(RM) $(OBJECTS) $(COBJECTS) $(SHARED_OBJECTS) $(SHARED_COBJECTS)
