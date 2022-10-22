@@ -6,7 +6,7 @@
 #include "RWLock.h"
 
 #if defined(POCO_OS_FAMILY_FREERTOS)
-#include "platforms/RWLock_FreeRTOS.h"
+#include "platforms/RWLock_FreeRTOS.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #if defined(_WIN32_WCE)
 #include "platforms/RWLock_WINCE.cpp"
