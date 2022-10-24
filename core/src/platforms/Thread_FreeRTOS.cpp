@@ -74,8 +74,8 @@ ThreadImpl::ThreadImpl(): _pData(new ThreadData) { }
 
 ThreadImpl::~ThreadImpl() {
 	if (_pData->started && !_pData->joined) {
-		//pthread_detach(_pData->thread);
-		_pData->thread->detach();
+		pthread_detach(_pData->thread);
+		//_pData->thread->detach();
 	}
 }
 
@@ -145,9 +145,9 @@ int ThreadImpl::getMaxOSPriorityImpl(int policy) {
 
 
 void ThreadImpl::setStackSizeImpl(int size) {
-//#ifndef PTHREAD_STACK_MIN
+#ifndef PTHREAD_STACK_MIN
 	_pData->stackSize = 0;
-/* #else
+#else
 	if (size != 0) {
 #if defined(POCO_OS_FAMILY_BSD)
 		// we must round up to a multiple of the memory page size
@@ -158,7 +158,7 @@ void ThreadImpl::setStackSizeImpl(int size) {
  			size = PTHREAD_STACK_MIN;
 	}
  	_pData->stackSize = size;
-#endif */
+#endif
 }
 
 
@@ -167,27 +167,27 @@ bool ThreadImpl::startImpl(SharedPtr<Runnable> pTarget) {
 		return false;
 	}
 
-	//pthread_attr_t attributes;
-	//pthread_attr_init(&attributes);
+	pthread_attr_t attributes;
+	pthread_attr_init(&attributes);
 
-	/* if (_pData->stackSize != 0) {
+	if (_pData->stackSize != 0) {
 		if (0 != pthread_attr_setstacksize(&attributes, _pData->stackSize)) {
 			pthread_attr_destroy(&attributes);
 			//throw SystemException("cannot set thread stack size");
 			return false;
 		}
-	} */
+	}
 
 	_pData->pRunnableTarget = pTarget;
-	_pData->thread = new std::thread(runnableEntry, this);
-	/* if (pthread_create(&_pData->thread, &attributes, runnableEntry, this)) {
+	//_pData->thread = new std::thread(runnableEntry, this);
+	if (pthread_create(&_pData->thread, &attributes, runnableEntry, this)) {
 		_pData->pRunnableTarget = 0;
 		pthread_attr_destroy(&attributes);
 		return false;
-	} */
+	}
 	
 	_pData->started = true;
-	//pthread_attr_destroy(&attributes);
+	pthread_attr_destroy(&attributes);
 
 	/* if (_pData->policy == SCHED_OTHER) {
 		if (_pData->prio != PRIO_NORMAL_IMPL) {
@@ -215,12 +215,12 @@ bool ThreadImpl::startImpl(SharedPtr<Runnable> pTarget) {
 bool ThreadImpl::joinImpl() {
 	if (!_pData->started) { return true; }
 	_pData->done.wait();
-	//void* result;
-	/* if (pthread_join(_pData->thread, &result)) {
+	void* result;
+	if (pthread_join(_pData->thread, &result)) {
 		return false;
-	} */
+	}
 	
-	_pData->thread->join();
+	//_pData->thread->join();
 	
 	_pData->joined = true;
 	return true;
@@ -229,12 +229,12 @@ bool ThreadImpl::joinImpl() {
 
 bool ThreadImpl::joinImpl(long milliseconds) {
 	if (_pData->started && _pData->done.tryWait(milliseconds)) {
-		/* void* result;
+		void* result;
 		if (pthread_join(_pData->thread, &result)) {
 			return false;
-		} */
+		}
 		
-		_pData->thread->join();
+		//_pData->thread->join();
 		
 		_pData->joined = true;
 		return true;
@@ -250,9 +250,8 @@ ThreadImpl* ThreadImpl::currentImpl() {
 
 
 ThreadImpl::TIDImpl ThreadImpl::currentTidImpl() {
-	//return pthread_self();
-	//return _pData->thread->get_id();
-	return std::this_thread::get_id();
+	return pthread_self();
+	//return std::this_thread::get_id();
 }
 
 

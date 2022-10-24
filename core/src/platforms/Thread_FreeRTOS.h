@@ -14,7 +14,7 @@
 #include "../RefCountedObject.h"
 #include "../AutoPtr.h"
 #include "../SharedPtr.h"
-//#include <pthread.h>
+#include <pthread.h>
 #include <thread>
 // must be limits.h (not <climits>) for PTHREAD_STACK_MIN on Solaris
 #include <limits.h>
@@ -33,8 +33,8 @@ namespace Poco {
 class Foundation_API ThreadImpl
 {
 public:
-	//typedef pthread_t TIDImpl;
-	typedef std::thread::id TIDImpl;
+	typedef pthread_t TIDImpl;
+	//typedef std::thread::id TIDImpl;
 	typedef void (*Callable)(void*);
 
 	enum Priority
@@ -122,7 +122,8 @@ private:
 		}
 
 		SharedPtr<Runnable> pRunnableTarget;
-		std::thread*  thread;
+		//std::thread*  thread;
+		pthread_t     thread;
 		int           prio;
 		int           osPrio;
 		int           policy;
@@ -170,7 +171,8 @@ inline int ThreadImpl::getStackSizeImpl() const {
 
 
 inline ThreadImpl::TIDImpl ThreadImpl::tidImpl() const {
-	return _pData->thread->get_id();
+	return _pData->thread;
+	//return _pData->thread->get_id();
 }
 
 
