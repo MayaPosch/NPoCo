@@ -67,9 +67,11 @@ $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).a: $(OBJECTS) $(COBJECTS)
 	$(STRIP) -S --strip-unneeded $@
 	
 $(TOP)/build/$(TARGET)/npoco/lib/$(OUTPUT).so.$(VERSION): $(SHARED_OBJECTS) $(SHARED_COBJECTS)
+ifneq ($(TARGET_OS),freertos)
 	$(CXX) -o $@ $(SHARED_FLAGS) $(LD_FLAGS) @$(TOP)/build/$(TARGET)/npoco/obj/net/shared/s_objects.psr $(LIBS)
 	cp $@ $@.debug
 	$(STRIP) -S --strip-unneeded $@
+endif
 	
 clean:
 	$(RM) $(OBJECTS)
