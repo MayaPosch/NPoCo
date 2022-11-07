@@ -21,7 +21,7 @@ export OBJCOPY = $(TOOL_PREFIX)objcopy
 
 PLATFORM_FLAGS = $(SYSROOT) -D__FREERTOS__ -D__XTENSA__ -DPOCO_NO_FPENVIRONMENT -DPOCO_NO_WSTRING \
 					-DPOCO_NO_SHAREDMEMORY -DPOCO_UTIL_NO_XMLCONFIGURATION \
-					-DPOCO_UTIL_NO_JSONCONFIGURATION
+					-DPOCO_UTIL_NO_JSONCONFIGURATION -DPOCO_THREAD_STACK_SIZE=10240
 #STD_FLAGS = $(PLATFORM_FLAGS) -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -fdata-sections -fPIE  -fno-strict-aliasing
 STD_FLAGS = $(PLATFORM_FLAGS) -Og -g3 -Wall -ffunction-sections -fdata-sections -fpic -funwind-tables -fstack-protector -fno-strict-aliasing -fno-omit-frame-pointer
 STD_CFLAGS = $(STD_FLAGS)

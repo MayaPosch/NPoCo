@@ -145,20 +145,23 @@ int ThreadImpl::getMaxOSPriorityImpl(int policy) {
 
 
 void ThreadImpl::setStackSizeImpl(int size) {
-#ifndef PTHREAD_STACK_MIN
+/* #ifndef PTHREAD_STACK_MIN
 	_pData->stackSize = 0;
-#else
+#else */
 	if (size != 0) {
-#if defined(POCO_OS_FAMILY_BSD)
+/* #if defined(POCO_OS_FAMILY_BSD)
 		// we must round up to a multiple of the memory page size
 		const int STACK_PAGE_SIZE = 4096;
 		size = ((size + STACK_PAGE_SIZE - 1)/STACK_PAGE_SIZE)*STACK_PAGE_SIZE;
-#endif
+#endif */
+#ifdef PTHREAD_STACK_MIN
  		if (size < PTHREAD_STACK_MIN)
  			size = PTHREAD_STACK_MIN;
-	}
- 	_pData->stackSize = size;
 #endif
+	}
+	
+ 	_pData->stackSize = size;
+//#endif
 }
 
 

@@ -34,6 +34,7 @@
 #if defined (__FREERTOS__)
 	#define POCO_OS_FAMILY_FREERTOS 1
 	#define POCO_OS POCO_OS_FREERTOS
+	//#define PTHREAD_STACK_MIN 10240
 #elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS_FAMILY_BSD 1

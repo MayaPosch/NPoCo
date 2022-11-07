@@ -76,15 +76,15 @@ TCPServer::TCPServer(TCPServerConnectionFactory::Ptr pFactory, Poco::ThreadPool&
 
 TCPServer::~TCPServer()
 {
-	try
-	{
+	/* try
+	{ */
 		stop();
 		_pDispatcher->release();
-	}
+	/* }
 	catch (...)
 	{
 		poco_unexpected();
-	}
+	} */
 }
 
 
