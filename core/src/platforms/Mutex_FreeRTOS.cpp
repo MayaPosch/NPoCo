@@ -5,19 +5,16 @@
 
 #include "Mutex_FreeRTOS.h"
 #include "../Timestamp.h"
-/* #if !defined(POCO_NO_SYS_SELECT_H)
+#if !defined(POCO_NO_SYS_SELECT_H)
 #include <sys/select.h>
 #endif
+
 #include <unistd.h>
-#if defined(POCO_VXWORKS)
-#include <timers.h>
-#include <cstring>
-#else
 #include <sys/time.h>
-#endif */
 
 
-/* #if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS - 200112L) >= 0L
+
+#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS - 200112L) >= 0L
 	#if defined(_POSIX_THREADS) && (_POSIX_THREADS - 200112L) >= 0L
 		#define POCO_HAVE_MUTEX_TIMEOUT
 	#endif
@@ -30,44 +27,30 @@
 			#define POCO_HAVE_CLOCK_GETTIME
 		#endif
 	#endif
-#endif */
+#endif
 
 
 namespace Poco {
 
 MutexImpl::MutexImpl() {
-/* #if defined(POCO_VXWORKS)
-	// This workaround is for VxWorks 5.x where
-	// pthread_mutex_init() won't properly initialize the mutex
-	// resulting in a subsequent freeze in pthread_mutex_destroy()
-	// if the mutex has never been used.
-	std::memset(&_mutex, 0, sizeof(_mutex));
-#endif */
-	//pthread_mutexattr_t attr;
-	//pthread_mutexattr_init(&attr);
-/* #if defined(PTHREAD_MUTEX_RECURSIVE_NP)
+	pthread_mutexattr_t attr;
+	pthread_mutexattr_init(&attr);
+#if defined(PTHREAD_MUTEX_RECURSIVE_NP)
 	pthread_mutexattr_settype_np(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
 #elif !defined(POCO_VXWORKS)
 	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-#endif */
-	/*if (pthread_mutex_init(&_mutex, &attr)) {
+#endif
+	if (pthread_mutex_init(&_mutex, &attr)) {
 		pthread_mutexattr_destroy(&attr);
 		//throw SystemException("cannot create mutex");
 		// TODO: Handle error.
 	}
 	
-	pthread_mutexattr_destroy(&attr);*/
+	pthread_mutexattr_destroy(&attr);
 }
 
 
 MutexImpl::MutexImpl(bool fast) {
-/* #if defined(POCO_VXWORKS)
-	// This workaround is for VxWorks 5.x where
-	// pthread_mutex_init() won't properly initialize the mutex
-	// resulting in a subsequent freeze in pthread_mutex_destroy()
-	// if the mutex has never been used.
-	std::memset(&_mutex, 0, sizeof(_mutex));
-#endif
 	pthread_mutexattr_t attr;
 	pthread_mutexattr_init(&attr);
 #if defined(PTHREAD_MUTEX_RECURSIVE_NP)
@@ -81,12 +64,12 @@ MutexImpl::MutexImpl(bool fast) {
 		// TODO: handle error.
 	}
 	
-	pthread_mutexattr_destroy(&attr); */
+	pthread_mutexattr_destroy(&attr);
 }
 
 
 MutexImpl::~MutexImpl() {
-	//pthread_mutex_destroy(&_mutex);
+	pthread_mutex_destroy(&_mutex);
 }
 
 
@@ -96,7 +79,7 @@ bool MutexImpl::tryLockImpl(long milliseconds) {
 	
 	return true;
 	
-/* #if defined(POCO_HAVE_MUTEX_TIMEOUT)
+#if defined(POCO_HAVE_MUTEX_TIMEOUT)
 	struct timespec abstime;
 #if defined(POCO_HAVE_CLOCK_GETTIME)
 	clock_gettime(CLOCK_REALTIME, &abstime);
@@ -128,22 +111,15 @@ bool MutexImpl::tryLockImpl(long milliseconds) {
 		int rc = pthread_mutex_trylock(&_mutex);
 		if (rc == 0) 			{ return true; }
 		else if (rc != EBUSY) 	{ return false; }
-#if defined(POCO_VXWORKS)
-		struct timespec ts;
-		ts.tv_sec = 0;
-		ts.tv_nsec = sleepMillis*1000000;
-		nanosleep(&ts, NULL);
 
-#else
 		struct timeval tv;
 		tv.tv_sec  = 0;
 		tv.tv_usec = sleepMillis * 1000;
 		select(0, NULL, NULL, NULL, &tv);
-#endif
 	}
 	while (!now.isElapsed(diff));
 	return false;
-#endif */
+#endif
 }
 
 
