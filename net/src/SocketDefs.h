@@ -225,10 +225,9 @@
     #define NI_NAMEREQD    0x04 /// Error if the host's name not in DNS */
     //#define NI_NUMERICSERV 0x08 // Return numeric form of the service (port #) */
     //#define NI_DGRAM       0x10 // Service is a datagram service */
+	
+	#define POCO_NO_LINUX_IF_PACKET_H 1
 
-	/* #include "lwip/err.h"
-	#include "lwip/sockets.h"
-	#include "lwip/sys.h" */
 	#include <unistd.h>
 	#include <errno.h>
 	#include <sys/types.h>
@@ -237,7 +236,6 @@
 	#include <sys/uio.h>
 	#include <fcntl.h>
 	
-	//#include <sys/socket.h>
 	#include <netdb.h>
 	#include <net/if.h>
 	#include <netinet/in.h>
