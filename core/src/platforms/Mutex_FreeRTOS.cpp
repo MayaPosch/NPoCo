@@ -37,7 +37,7 @@ MutexImpl::MutexImpl() {
 	pthread_mutexattr_init(&attr);
 #if defined(PTHREAD_MUTEX_RECURSIVE_NP)
 	pthread_mutexattr_settype_np(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
-#elif !defined(POCO_VXWORKS)
+#else
 	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 #endif
 	if (pthread_mutex_init(&_mutex, &attr)) {
