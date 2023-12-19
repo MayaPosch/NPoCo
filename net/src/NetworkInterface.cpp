@@ -18,7 +18,7 @@
 #include "npoco/Format.h"
 #if defined(POCO_OS_FAMILY_WINDOWS)
 	#include "npoco/UnicodeConverter.h"
-	#include "npoco/Error.h"
+	//#include "npoco/Error.h"
 	#include <wincrypt.h>
 	#include <iphlpapi.h>
 	#include <ipifcons.h>
