@@ -4,10 +4,11 @@ endif
 
 include ../../$(TARGET).mk
 
-LIBS := -L$(TOP)/build/$(TARGET)/npoco/lib -lNPocoCore -lNPocoNet
+LIBS := -L../../build/$(TARGET)/npoco/lib -lNPocoNet -lNPocoCore
+INCLUDES := -I../../build/$(TARGET)/npoco/include
 
 
-all: cv
+all: udp
 
-cv:
-	$(CXX) -o stream_socket_test npoco_core_condition_test.cpp $(LIBS)
+udp:
+	$(CXX) -o udp_server_test udp_server_test.cpp $(INCLUDES) $(LIBS) $(STD_LIBS)
