@@ -66,7 +66,7 @@ public:
 		///
 		/// Calls to connect() cannot come before calls to bind().
 
-	void bind(const SocketAddress& address, bool reuseAddress = false);
+	int bind(const SocketAddress& address, bool reuseAddress = false);
 		/// Bind a local address to the socket.
 		///
 		/// This is usually only done when establishing a server

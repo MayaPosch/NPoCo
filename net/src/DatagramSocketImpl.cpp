@@ -46,9 +46,8 @@ DatagramSocketImpl::~DatagramSocketImpl()
 }
 
 
-bool DatagramSocketImpl::init(int af)
-{
-	initSocket(af, SOCK_DGRAM);
+bool DatagramSocketImpl::init(int af) {
+	return initSocket(af, SOCK_DGRAM);
 }
 
 

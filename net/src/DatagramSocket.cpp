@@ -69,9 +69,9 @@ void DatagramSocket::connect(const SocketAddress& address)
 }
 
 
-void DatagramSocket::bind(const SocketAddress& address, bool reuseAddress)
+int DatagramSocket::bind(const SocketAddress& address, bool reuseAddress)
 {
-	impl()->bind(address, reuseAddress);
+	return impl()->bind(address, reuseAddress);
 }
 
 

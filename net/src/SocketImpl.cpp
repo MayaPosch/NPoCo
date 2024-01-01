@@ -218,7 +218,9 @@ int SocketImpl::bind(const SocketAddress& address, bool reuseAddress) {
 
 int SocketImpl::bind(const SocketAddress& address, bool reuseAddress, bool reusePort) {
 	if (_sockfd == POCO_INVALID_SOCKET) {
-		init(address.af());
+		if (!init(address.af())) {
+			return -2;
+		}
 	}
 	
 	if (reuseAddress) 	{ setReuseAddress(true); }
@@ -1290,6 +1292,8 @@ int SocketImpl::ioctl(poco_ioctl_request_t request, int& arg) {
 		//error();
 		return -1;
 	}
+	
+	return rc;
 }
 
 
@@ -1306,6 +1310,8 @@ int SocketImpl::ioctl(poco_ioctl_request_t request, void* arg)
 		//error();
 		return -1;
 	}
+	
+	return rc;
 }
 
 
