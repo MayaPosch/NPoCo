@@ -21,15 +21,9 @@
 
 int main() {
 	std::cout << "Starting UDP server test..." << std::endl;
-	
-#if defined(POCO_OS_FAMILY_WINDOWS)
-	WORD    version = MAKEWORD(2, 2);
-	WSADATA data;
-	if (WSAStartup(version, &data) != 0) { 
-		std::cerr << "Error WSAStartup." << std::endl;
-		return 1;
-	}
-#endif
+
+	// Needed on Windows with static linkage. Unused in all other cases.
+	Poco::Net::initializeNetwork();
 	
 	// Set up UDP server with listening socket.
 	uint16_t port = 4004;
@@ -44,12 +38,10 @@ int main() {
 	
 	// Create socket address instance and bind the UDP socket.
 	Poco::Net::SocketAddress sa(Poco::Net::IPAddress(), port);
-	//Poco::Net::SocketAddress sa(Poco::Net::IPAddress("127.0.0.1"), port);
 	int err = udpsocket.bind(sa, true);
 	if (err != 0) {
 		std::cout << "Failed to bind to UDP port: " << err << "..." << std::endl;
 		perror(NULL);
-		//perror("bind");
 #ifdef __WIN32
 		wchar_t *s = NULL;
 		FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | 
@@ -71,8 +63,6 @@ int main() {
 	Poco::Timespan span(250000);
 	while (running) {
 		// Read data in from socket.
-		//std::cout << "DEBUG: Read from socket." << std::endl;
-		//Poco::Timespan timeout(0, 100); // 100 microsecond timeout
 		if (udpsocket.poll(span, Poco::Net::Socket::SELECT_READ)) {
 			std::cout << "DEBUG: in poll." << std::endl;
 			char buffer[2048];
